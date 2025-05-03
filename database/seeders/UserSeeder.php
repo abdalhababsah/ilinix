@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'User',
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
-                'pin' => '1234',
+              
                 'role_id' => 1,
                 'assigned_mentor_id' => null,
                 'created_at' => now(),
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'User',
                 'email' => 'mentor@example.com',
                 'password' => Hash::make('password'),
-                'pin' => '5678',
+       
                 'role_id' => 2,
                 'assigned_mentor_id' => 1,
                 'created_at' => now(),
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'User',
                 'email' => 'intern@example.com',
                 'password' => Hash::make('password'),
-                'pin' => '9012',
+            
                 'role_id' => 3,
                 'assigned_mentor_id' => 2,
                 'created_at' => now(),
