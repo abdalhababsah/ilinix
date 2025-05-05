@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,20 +8,33 @@ use Illuminate\Http\Request;
 
 class ProviderController extends Controller
 {
-    public function index() {
-        $providers = Provider::paginate(10);
+    public function index(Request $request)
+    {
+        $query = Provider::query();
+        
+        // Filter by name if provided
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        // Paginate results and append query string for pagination links
+        $providers = $query->paginate(10)->withQueryString();
+        
         return view('admin.providers.index', compact('providers'));
     }
 
-    public function create() {
+    public function create()
+    {
+    }
+    
+    public function show(Provider $provider)
+    {
     }
 
-
-    public function show(Provider $provider) {
+    public function edit(Provider $provider)
+    {
     }
 
-    public function edit(Provider $provider) {
-    }
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -37,7 +51,7 @@ class ProviderController extends Controller
         Provider::create($data);
 
         return redirect()->route('admin.providers.index')
-                         ->with('success', 'Provider created.');
+                        ->with('success', 'Provider created.');
     }
 
     public function update(Request $request, Provider $provider)
@@ -59,11 +73,11 @@ class ProviderController extends Controller
         $provider->update($data);
 
         return redirect()->route('admin.providers.index')
-                         ->with('success', 'Provider updated.');
+                        ->with('success', 'Provider updated.');
     }
-
-
-    public function destroy(Provider $provider) {
+    
+    public function destroy(Provider $provider)
+    {
         $provider->delete();
         return redirect()->route('admin.providers.index')->with('success', 'Provider deleted.');
     }

@@ -7,487 +7,773 @@
         <div class="row">
             <!-- Title Start -->
             <div class="col-12 col-md-7">
-                <h1 class="mb-0 pb-0 display-4" id="title">E-learning Dashboard</h1>
+                <h1 class="mb-0 pb-0 display-4" id="title">Admin Dashboard</h1>
                 <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
                     <ul class="breadcrumb pt-0">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="Dashboards.Elearning.html">Dashboards</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     </ul>
                 </nav>
             </div>
             <!-- Title End -->
+            <div class="col-12 col-md-5 d-flex align-items-center justify-content-md-end">
+                <div class="btn-group ms-1 check-all-container">
+                    <div class="dropdown-menu dropdown-menu-end custom-sort">
+                        <a class="dropdown-item" href="{{ route('admin.interns.index') }}">
+                            <i data-acorn-icon="user" class="me-2"></i>
+                            <span class="align-middle">View Interns</span>
+                        </a>
+                        <a class="dropdown-item" href="{{ route('admin.certificate-programs.index') }}">
+                            <i data-acorn-icon="certificate" class="me-2"></i>
+                            <span class="align-middle">View Certificates</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Title and Top Buttons End -->
 
     <!-- Content Start -->
-
     <div class="row">
-        <!-- Continue Learning Start -->
-        <div class="col-xl-6 mb-5">
-            <h2 class="small-title">Continue Learning</h2>
-            <div class="scroll-out">
-                <div class="scroll-by-count" data-count="3">
-                    <div class="card mb-2">
-                        <div class="row g-0 sh-14">
-                            <div class="col-auto">
-                                <a href="Course.Detail.html" class="d-block position-relative h-100">
-                                    <img src="{{ asset('dashboard-assets/img/course/small/course-1.webp') }}" alt="alternate text"
-                                        class="card-img card-img-horizontal sw-14 sw-lg-18" />
-                                </a>
-                            </div>
-                            <div class="col">
-                                <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
-                                    <div class="w-100">
-                                        <div class="d-flex flex-row justify-content-between mb-2">
-                                            <a href="Course.Detail.html" class="font-heading mb-1">React
-                                                Web Developer Course</a>
-                                            <div class="text-muted">67%</div>
-                                        </div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar"
-                                                aria-valuenow="67" aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Key Stats Start -->
+        <div class="col-12 mb-5">
+           
 
-                    <div class="card mb-2">
-                        <div class="row g-0 sh-14">
-                            <div class="col-auto">
-                                <a href="Course.Detail.html" class="d-block position-relative h-100">
-                                    <img src="{{ asset('dashboard-assets/img/course/small/course-2.webp') }}" alt="alternate text"
-                                        class="card-img card-img-horizontal sw-14 sw-lg-18" />
-                                </a>
-                            </div>
-                            <div class="col">
-                                <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
-                                    <div class="w-100">
-                                        <div class="d-flex flex-row justify-content-between mb-2">
-                                            <a href="Course.Detail.html" class="font-heading mb-1">Python:
-                                                From Zero to Expert</a>
-                                            <div class="text-muted">85%</div>
-                                        </div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar"
-                                                aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <div class="row g-0 sh-14">
-                            <div class="col-auto">
-                                <a href="Course.Detail.html" class="d-block position-relative h-100">
-                                    <img src="{{ asset('dashboard-assets/img/course/small/course-3.webp') }}" alt="alternate text"
-                                        class="card-img card-img-horizontal sw-14 sw-lg-18" />
-                                </a>
-                            </div>
-                            <div class="col">
-                                <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
-                                    <div class="w-100">
-                                        <div class="d-flex flex-row justify-content-between mb-2">
-                                            <a href="Course.Detail.html" class="font-heading mb-1">Learn
-                                                and Understand NodeJS</a>
-                                            <div class="text-muted">14%</div>
-                                        </div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar"
-                                                aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <div class="row g-0 sh-14">
-                            <div class="col-auto">
-                                <a href="Course.Detail.html" class="d-block position-relative h-100">
-                                    <img src="{{ asset('dashboard-assets/img/course/small/course-4.webp') }}" alt="alternate text"
-                                        class="card-img card-img-horizontal sw-14 sw-lg-18" />
-                                </a>
-                            </div>
-                            <div class="col">
-                                <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
-                                    <div class="w-100">
-                                        <div class="d-flex flex-row justify-content-between mb-2">
-                                            <a href="Course.Detail.html" class="font-heading mb-1">HTML 5
-                                                - The Complete Guide</a>
-                                            <div class="text-muted">63%</div>
-                                        </div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar"
-                                                aria-valuenow="63" aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <div class="row g-0 sh-14">
-                            <div class="col-auto">
-                                <a href="Course.Detail.html" class="d-block position-relative h-100">
-                                    <img src="{{ asset('dashboard-assets/img/course/small/course-5.webp') }}" alt="alternate text"
-                                        class="card-img card-img-horizontal sw-14 sw-lg-18" />
-                                </a>
-                            </div>
-                            <div class="col">
-                                <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
-                                    <div class="w-100">
-                                        <div class="d-flex flex-row justify-content-between mb-2">
-                                            <a href="Course.Detail.html" class="font-heading mb-1">Getting
-                                                Started with Gulpjs</a>
-                                            <div class="text-muted">36%</div>
-                                        </div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar"
-                                                aria-valuenow="46" aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Continue Learning End -->
-
-        <!-- Recommended Courses Start -->
-        <div class="col-xl-6 mb-5">
-            <h2 class="small-title">Recommended for You</h2>
-            <div class="card w-100 sh-50 sh-md-40 h-xl-100-card hover-img-scale-up position-relative">
-                <img src="{{ asset('dashboard-assets/img/banner/cta-standard-3.webp') }}" class="card-img h-100 scale position-absolute"
-                    alt="card image" />
-                <div class="card-img-overlay d-flex flex-column justify-content-between bg-transparent">
-                    <div>
-                        <div class="cta-1 mb-3 text-white w-75 w-sm-50 opacity-75">Complete Web Developer
-                            Zero to Mastery</div>
-                        <div class="w-50 text-white mb-3 opacity-75">
-                            Liquorice caramels chupa chups bonbon. Jelly-o candy sugar chocolate cake
-                            caramels apple pie lollipop jujubes.
-                        </div>
-                        <div class="mb-2">
-                            <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                                <select class="rating" name="rating" autocomplete="off"
-                                    data-readonly="true" data-initial-rating="5">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                            <div class="text-muted d-inline-block text-small align-text-top">(572)</div>
-                        </div>
-                        <div>$ 27.50</div>
-                    </div>
-                    <div>
-                        <a href="Course.Detail.html"
-                            class="btn btn-icon btn-icon-start btn-primary mt-3 stretched-link">
-                            <i data-acorn-icon="chevron-right"></i>
-                            <span>View</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Recommended Courses End -->
-    </div>
-
-    <!-- Achievements Start -->
-    <h2 class="small-title">Achievements</h2>
-    <div class="row gx-2">
-        <div class="col-12 p-0">
-            <div class="glide" id="glideAchievements">
-                <div class="glide__track" data-glide-el="track">
-                    <div class="glide__slides">
-                        <!-- slides unchanged, no images to update -->
-                        <div class="glide__slide">
-                            <div class="card mb-5 sh-25">
-                                <div
-                                    class="card-body text-center align-items-center d-flex flex-column justify-content-between">
-                                    <div
-                                        class="d-flex sw-6 sh-6 bg-gradient-light mb-4 align-items-center justify-content-center rounded-xl position-relative mt-3">
-                                        <i data-acorn-icon="badge" class="text-white"></i>
-                                        <!-- inline SVGs are not changed -->
-                                        ...
-                                    </div>
-                                    <p class="card-text mb-0 d-flex">Javascript Novice</p>
-                                    <p class="text-center mb-0 d-flex text-primary">Level 1</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- More slides ... -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Achievements End -->
-
-    <!-- Trending Courses Start -->
-    <h2 class="small-title">Trending Courses</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-2 mb-5">
-        <div class="col">
-            <div class="card h-100">
-                <img src="{{ asset('dashboard-assets/img/course/small/course-4.webp') }}" class="card-img-top sh-22" alt="card image" />
-                <div class="card-body">
-                    <h5 class="heading mb-0"><a href="Course.Detail.html"
-                            class="body-link stretched-link">Introduction to Bread Making</a></h5>
-                </div>
-                <div class="card-footer border-0 pt-0">
-                    <div class="mb-2">
-                        <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                            <select class="rating" name="rating" autocomplete="off"
-                                data-readonly="true" data-initial-rating="5">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="text-muted d-inline-block text-small align-text-top">(39)</div>
-                    </div>
-                    <div class="card-text mb-0">
-                        <div class="text-muted text-overline text-small">
-                            <del>$ 42.25</del>
-                        </div>
-                        <div>$ 27.50</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="{{ asset('dashboard-assets/img/course/small/course-5.webp') }}" class="card-img-top sh-22" alt="card image" />
-                <div class="card-body">
-                    <h5 class="heading mb-0"><a href="Course.Detail.html"
-                            class="body-link stretched-link">14 Facts About Sugar</a></h5>
-                </div>
-                <div class="card-footer border-0 pt-0">
-                    <div class="mb-2">
-                        <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                            <select class="rating" name="rating" autocomplete="off"
-                                data-readonly="true" data-initial-rating="5">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="text-muted d-inline-block text-small align-text-top">(221)</div>
-                    </div>
-                    <div class="card-text mb-0">
-                        <div class="text-muted text-overline text-small">
-                            <del>$ 36.50</del>
-                        </div>
-                        <div>$ 15.25</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <span
-                    class="badge rounded-pill bg-primary me-1 position-absolute e-3 t-3 z-index-1">POPULAR</span>
-                <img src="{{ asset('dashboard-assets/img/course/small/course-6.webp') }}" class="card-img-top sh-22" alt="card image" />
-                <div class="card-body">
-                    <h5 class="heading mb-0"><a href="Course.Detail.html"
-                            class="body-link stretched-link">Apple Cake Recipe</a></h5>
-                </div>
-                <div class="card-footer border-0 pt-0">
-                    <div class="mb-2">
-                        <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                            <select class="rating" name="rating" autocomplete="off"
-                                data-readonly="true" data-initial-rating="5">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="text-muted d-inline-block text-small align-text-top">(572)</div>
-                    </div>
-                    <div class="card-text mb-0">
-                        <div class="text-muted text-overline text-small">
-                            <del>$ 51.00</del>
-                        </div>
-                        <div>$ 36.80</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="{{ asset('dashboard-assets/img/course/small/course-7.webp') }}" class="card-img-top sh-22" alt="card image" />
-                <div class="card-body">
-                    <h5 class="heading mb-0"><a href="Course.Detail.html"
-                            class="body-link stretched-link">Dough for the Molds</a></h5>
-                </div>
-                <div class="card-footer border-0 pt-0">
-                    <div class="mb-2">
-                        <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                            <select class="rating" name="rating" autocomplete="off"
-                                data-readonly="true" data-initial-rating="5">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="text-muted d-inline-block text-small align-text-top">(25)</div>
-                    </div>
-                    <div class="card-text mb-0">
-                        <div class="text-muted text-overline text-small">
-                            <del>$ 18.25</del>
-                        </div>
-                        <div>$ 11.00</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col d-none d-xl-block">
-            <div class="card h-100">
-                <img src="{{ asset('dashboard-assets/img/course/small/course-9.webp') }}" class="card-img-top sh-22" alt="card image" />
-                <div class="card-body">
-                    <h5 class="heading mb-0"><a href="Course.Detail.html"
-                            class="body-link stretched-link">Fruit Decorations</a></h5>
-                </div>
-                <div class="card-footer border-0 pt-0">
-                    <div class="mb-2">
-                        <div class="br-wrapper br-theme-cs-icon d-inline-block">
-                            <select class="rating" name="rating" autocomplete="off"
-                                data-readonly="true" data-initial-rating="5">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="text-muted d-inline-block text-small align-text-top">(472)</div>
-                    </div>
-                    <div class="card-text mb-0">
-                        <div class="text-muted text-overline text-small">
-                            <del>$ 24.00</del>
-                        </div>
-                        <div>$ 14.90</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Trending Courses End -->
-
-    <div class="row">
-        <!-- Related Subjects Start -->
-        <div class="col-xl-4 mb-5">
-            <h2 class="small-title">Related Subjects</h2>
             <div class="row g-2">
-                <div class="col-6 col-xl-6 sh-19">
-                    <div class="card h-100 hover-scale-up">
-                        <a class="card-body text-center" href="Course.List.html">
-                            <i data-acorn-icon="cupcake" class="text-primary"></i>
-                            <p class="heading mt-3 text-body">Cupcakes</p>
-                            <div class="text-extra-small fw-medium text-muted">14 COURSES</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6 col-xl-6 sh-19">
-                    <div class="card h-100 hover-scale-up">
-                        <a class="card-body text-center" href="Course.List.html">
-                            <i data-acorn-icon="loaf" class="text-primary"></i>
-                            <p class="heading mt-3 text-body">Breads</p>
-                            <div class="text-extra-small fw-medium text-muted">3 COURSES</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6 col-xl-6 sh-19">
-                    <div class="card h-100 hover-scale-up">
-                        <a class="card-body text-center" href="Course.List.html">
-                            <i data-acorn-icon="radish" class="text-primary"></i>
-                            <p class="heading mt-3 text-body">Vegetables</p>
-                            <div class="text-extra-small fw-medium text-muted">8 COURSES</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6 col-xl-6 sh-19">
-                    <div class="card h-100 hover-scale-up">
-                        <a class="card-body text-center" href="Course.List.html">
-                            <i data-acorn-icon="banana" class="text-primary"></i>
-                            <p class="heading mt-3 text-body">Fruits</p>
-                            <div class="text-extra-small fw-medium text-muted">9 COURSES</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Related Subjects End -->
-
-        <!-- Your Time Start -->
-        <div class="col-xl-4 mb-5">
-            <h2 class="small-title">Your Time</h2>
-            <div class="card sh-40 h-xl-100-card">
-                <div class="card-body h-100">
-                    <div class="h-100">
-                        <canvas id="timeChart"></canvas>
-                        <div
-                            class="custom-tooltip position-absolute bg-foreground rounded-md border border-separator pe-none p-3 d-flex flex-column z-index-1 align-items-center opacity-0 basic-transform-transition">
-                            <div
-                                class="icon-container border d-flex align-items-center justify-content-center align-self-center rounded-xl sh-5 sw-5 rounded-xl mb-3">
-                                <span class="icon"></span>
+                <!-- Total Interns Card -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card sh-13 sh-lg-15 sh-xl-14">
+                        <div class="h-100 row g-0 card-body align-items-center py-3">
+                            <div class="col-auto pe-3">
+                                <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+                                    <i data-acorn-icon="user" class="text-white"></i>
+                                </div>
                             </div>
-                            <span
-                                class="text d-flex align-middle text-alternate align-items-center text-small">Bread</span>
-                            <span
-                                class="value d-flex align-middle text-body align-items-center cta-4">300</span>
+                            <div class="col">
+                                <div class="row gx-2 d-flex align-content-center">
+                                    <div class="col-12 col-xl d-flex">
+                                        <div class="d-flex align-items-center lh-1-25">Total Interns</div>
+                                    </div>
+                                    <div class="col-12 col-xl-auto">
+                                        <div class="cta-2 text-primary">{{ $totalInterns }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Interns Card -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card sh-13 sh-lg-15 sh-xl-14">
+                        <div class="h-100 row g-0 card-body align-items-center py-3">
+                            <div class="col-auto pe-3">
+                                <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+                                    <i data-acorn-icon="check" class="text-white"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row gx-2 d-flex align-content-center">
+                                    <div class="col-12 col-xl d-flex">
+                                        <div class="d-flex align-items-center lh-1-25">Active Interns</div>
+                                    </div>
+                                    <div class="col-12 col-xl-auto">
+                                        <div class="cta-2 text-success">{{ $activeInterns }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificates Card -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card sh-13 sh-lg-15 sh-xl-14">
+                        <div class="h-100 row g-0 card-body align-items-center py-3">
+                            <div class="col-auto pe-3">
+                                <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+                                    <i data-acorn-icon="book" class="text-white"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row gx-2 d-flex align-content-center">
+                                    <div class="col-12 col-xl d-flex">
+                                        <div class="d-flex align-items-center lh-1-25">Total Certificates</div>
+                                    </div>
+                                    <div class="col-12 col-xl-auto">
+                                        <div class="cta-2 text-primary">{{ $totalCertificates }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completed Exams Card -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card sh-13 sh-lg-15 sh-xl-14">
+                        <div class="h-100 row g-0 card-body align-items-center py-3">
+                            <div class="col-auto pe-3">
+                                <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+                                    <i data-acorn-icon="graduation" class="text-white"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row gx-2 d-flex align-content-center">
+                                    <div class="col-12 col-xl d-flex">
+                                        <div class="d-flex align-items-center lh-1-25">Passed Exams</div>
+                                    </div>
+                                    <div class="col-12 col-xl-auto">
+                                        <div class="cta-2 text-info">{{ $passedExams }}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Your Time End -->
+        <!-- Key Stats End -->
 
-        <!-- Paths Start -->
-        <div class="col-xl-4 mb-5">
-            <h2 class="small-title">Paths</h2>
-            <div class="card sh-40 h-xl-100-card">
-                <div class="card-body d-flex align-items-center justify-content-center h-100">
-                    <div class="text-center">
-                        <img src="{{ asset('dashboard-assets/img/illustration/icon-analytics.webp') }}" class="theme-filter mb-3"
-                            alt="launch" />
-                        <p class="mb-3">You are not on any path!</p>
-                        <a href="Path.List.html"
-                            class="btn btn-icon btn-icon-start btn-primary mt-3 stretched-link">
-                            <i data-acorn-icon="chevron-right"></i>
-                            <span>Take a Path</span>
-                        </a>
+        <!-- Statistics Charts Start -->
+        <div class="col-12 col-xl-6 mb-5">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h2 class="small-title">Monthly Activity</h2>
+                </div>
+                <div class="card-body">
+                    <div class="h-100">
+                        <canvas id="internActivityChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Paths End -->
+
+        <div class="col-12 col-xl-6 mb-5">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h2 class="small-title">Certification Status</h2>
+                </div>
+                <div class="card-body">
+                    <div class="h-100">
+                        <canvas id="certificationStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Statistics Charts End -->
+
+        <!-- Top Certificates and Interns Start -->
+        <div class="col-12 col-xl-6 mb-5">
+            <h2 class="small-title">Top Certificates</h2>
+            <div class="scroll-out">
+                <div class="scroll-by-count" data-count="4">
+                    @foreach($topCertificates as $certificate)
+                        <div class="card mb-2">
+                            <div class="row g-0 sh-14">
+                                <div class="col-auto">
+                                    <div class="d-flex h-100 align-items-center justify-content-center me-2 ms-3">
+                                        @if($certificate->certificate && $certificate->certificate->provider)
+                                            @if($certificate->certificate->provider->logo)
+                                                <img src="{{ asset('storage/' . $certificate->certificate->provider->logo) }}" alt="Provider" class="rounded" width="40">
+                                            @else
+                                                <div class="bg-primary text-white d-flex rounded-xl align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i data-acorn-icon="certificate"></i>
+                                                </div>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card-body pt-0 pb-0 h-100 d-flex align-items-center">
+                                        <div class="w-100">
+                                            <div class="d-flex flex-row justify-content-between mb-2">
+                                                <div class="font-heading mb-1">{{ $certificate->certificate->title ?? 'Unknown Certificate' }}</div>
+                                                <div class="text-muted">{{ $certificate->assignments }} Assignments</div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="text-small text-muted">{{ $certificate->certificate->provider->name ?? 'Unknown Provider' }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-6 mb-5">
+            <h2 class="small-title">Recent Activity</h2>
+            <div class="card h-100-card">
+                <div class="card-body mb-n2 scroll-out h-100">
+                    <div class="scroll h-100">
+                        @if($recentProgressUpdates->count() > 0)
+                            <div class="mb-4">
+                                <div class="border-bottom border-separator-light mb-2 pb-2">
+                                    <h6 class="text-primary">Recent Course Progress</h6>
+                                </div>
+                                @foreach($recentProgressUpdates as $update)
+                                    <div class="row g-0 mb-2">
+                                        <div class="col-auto">
+                                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                                <div class="sh-3">
+                                                    <i data-acorn-icon="{{ $update->is_completed ? 'check-circle' : 'clock' }}" class="text-{{ $update->is_completed ? 'success' : 'warning' }}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-0 h-100 justify-content-center">
+                                                <div class="d-flex flex-column">
+                                                    <div class="text-alternate mt-0 mb-1">
+                                                        <strong>{{ $update->intern->first_name }} {{ $update->intern->last_name }}</strong> 
+                                                        {{ $update->is_completed ? 'completed' : 'made progress on' }} 
+                                                        <strong>{{ $update->course->title ?? 'a course' }}</strong>
+                                                    </div>
+                                                    <div class="text-small text-muted">{{ $update->created_at->diffForHumans() }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if($recentCertificateProgress->count() > 0)
+                            <div>
+                                <div class="border-bottom border-separator-light mb-2 pb-2">
+                                    <h6 class="text-primary">Recent Certificate Progress</h6>
+                                </div>
+                                @foreach($recentCertificateProgress as $progress)
+                                    @php
+                                        $statusIcon = 'check';
+                                        $statusClass = 'success';
+                                        
+                                        if($progress->study_status == 'in_progress') {
+                                            $statusIcon = 'clock';
+                                            $statusClass = 'warning';
+                                        } elseif($progress->study_status == 'studying_for_exam') {
+                                            $statusIcon = 'book';
+                                            $statusClass = 'info';
+                                        } elseif($progress->study_status == 'requested_voucher') {
+                                            $statusIcon = 'ticket';
+                                            $statusClass = 'primary';
+                                        } elseif($progress->study_status == 'took_exam') {
+                                            $statusIcon = 'file-text';
+                                            $statusClass = 'info';
+                                        } elseif($progress->study_status == 'failed') {
+                                            $statusIcon = 'close';
+                                            $statusClass = 'danger';
+                                        }
+                                    @endphp
+                                    <div class="row g-0 mb-2">
+                                        <div class="col-auto">
+                                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                                <div class="sh-3">
+                                                    <i data-acorn-icon="{{ $statusIcon }}" class="text-{{ $statusClass }}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-0 h-100 justify-content-center">
+                                                <div class="d-flex flex-column">
+                                                    <div class="text-alternate mt-0 mb-1">
+                                                        <strong>{{ $progress->internCertificate->user->first_name ?? 'Unknown' }} {{ $progress->internCertificate->user->last_name ?? 'Intern' }}</strong> 
+                                                        <span class="badge bg-{{ $statusClass }} ms-1 me-1">{{ ucfirst(str_replace('_', ' ', $progress->study_status)) }}</span>
+                                                        <strong>{{ $progress->internCertificate->certificate->title ?? 'Unknown Certificate' }}</strong>
+                                                    </div>
+                                                    @if($progress->notes)
+                                                        <div class="text-muted text-truncate">{{ $progress->notes }}</div>
+                                                    @endif
+                                                    <div class="text-small text-muted">{{ $progress->created_at->diffForHumans() }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if($recentProgressUpdates->count() == 0 && $recentCertificateProgress->count() == 0)
+                            <div class="text-center py-5">
+                                <i data-acorn-icon="activity" class="text-muted mb-2" style="font-size: 3rem;"></i>
+                                <p class="text-muted">No recent activity to display</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Certificates and Interns End -->
+
+<!-- Progress and Status Indicators Start -->
+<div class="col-12 mb-5">
+    <h2 class="small-title">Intern Status</h2>
+    <div class="card mb-2">
+        <div class="card-body">
+            <div class="row g-0 align-items-center mb-3">
+                <div class="col-auto">
+                    <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                        <i data-acorn-icon="user" class="text-white"></i>
+                    </div>
+                </div>
+                <div class="col ps-3">
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="sh-4 d-flex align-items-center lh-1-25">Active</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="sh-4 d-flex align-items-center fw-bold text-success">{{ $activeInterns }}</div>
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ $totalInterns > 0 ? ($activeInterns / $totalInterns * 100) : 0 }}%" aria-valuenow="{{ $activeInterns }}" aria-valuemin="0" aria-valuemax="{{ $totalInterns }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 align-items-center mb-3">
+                <div class="col-auto">
+                    <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                        <i data-acorn-icon="check" class="text-white"></i>
+                    </div>
+                </div>
+                <div class="col ps-3">
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="sh-4 d-flex align-items-center lh-1-25">Completed</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="sh-4 d-flex align-items-center fw-bold text-primary">{{ $completedInterns }}</div>
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $totalInterns > 0 ? ($completedInterns / $totalInterns * 100) : 0 }}%" aria-valuenow="{{ $completedInterns }}" aria-valuemin="0" aria-valuemax="{{ $totalInterns }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 align-items-center mb-3">
+                <div class="col-auto">
+                    <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                        <i data-acorn-icon="error-hexagon" class="text-white"></i>
+                    </div>
+                </div>
+                <div class="col ps-3">
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="sh-4 d-flex align-items-center lh-1-25">Inactive</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="sh-4 d-flex align-items-center fw-bold text-warning">{{ $inactiveInterns }}</div>
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $totalInterns > 0 ? ($inactiveInterns / $totalInterns * 100) : 0 }}%" aria-valuenow="{{ $inactiveInterns }}" aria-valuemin="0" aria-valuemax="{{ $totalInterns }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 align-items-center">
+                <div class="col-auto">
+                    <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                        <i data-acorn-icon="minus" class="text-white"></i>
+                    </div>
+                </div>
+                <div class="col ps-3">
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="sh-4 d-flex align-items-center lh-1-25">Unassigned</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="sh-4 d-flex align-items-center fw-bold text-danger">{{ $unassignedInterns }}</div>
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $totalInterns > 0 ? ($unassignedInterns / $totalInterns * 100) : 0 }}%" aria-valuenow="{{ $unassignedInterns }}" aria-valuemin="0" aria-valuemax="{{ $totalInterns }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Progress and Status Indicators End -->
+
+<!-- Certificate Progress Section - FULL WIDTH -->
+<div class="col-12 mb-5">
+    <h2 class="small-title">Certificate Progress</h2>
+    <div class="card mb-2">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-auto">
+                            <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                <i data-acorn-icon="book-open" class="text-white"></i>
+                            </div>
+                        </div>
+                        <div class="col ps-3">
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="sh-4 d-flex align-items-center lh-1-25">In Progress</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="sh-4 d-flex align-items-center fw-bold text-warning">{{ $certProgressByStatus['in_progress'] ?? 0 }}</div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $totalCertificateAssignments > 0 ? (($certProgressByStatus['in_progress'] ?? 0) / $totalCertificateAssignments * 100) : 0 }}%" aria-valuenow="{{ $certProgressByStatus['in_progress'] ?? 0 }}" aria-valuemin="0" aria-valuemax="{{ $totalCertificateAssignments }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-auto">
+                            <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                <i data-acorn-icon="book" class="text-white"></i>
+                            </div>
+                        </div>
+                        <div class="col ps-3">
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="sh-4 d-flex align-items-center lh-1-25">Studying for Exam</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="sh-4 d-flex align-items-center fw-bold text-info">{{ $certProgressByStatus['studying_for_exam'] ?? 0 }}</div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ $totalCertificateAssignments > 0 ? (($certProgressByStatus['studying_for_exam'] ?? 0) / $totalCertificateAssignments * 100) : 0 }}%" aria-valuenow="{{ $certProgressByStatus['studying_for_exam'] ?? 0 }}" aria-valuemin="0" aria-valuemax="{{ $totalCertificateAssignments }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-auto">
+                            <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                <i data-acorn-icon="tag" class="text-white"></i>
+                            </div>
+                        </div>
+                        <div class="col ps-3">
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="sh-4 d-flex align-items-center lh-1-25">Voucher Requested</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="sh-4 d-flex align-items-center fw-bold text-primary">{{ $certProgressByStatus['requested_voucher'] ?? 0 }}</div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $totalCertificateAssignments > 0 ? (($certProgressByStatus['requested_voucher'] ?? 0) / $totalCertificateAssignments * 100) : 0 }}%" aria-valuenow="{{ $certProgressByStatus['requested_voucher'] ?? 0 }}" aria-valuemin="0" aria-valuemax="{{ $totalCertificateAssignments }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-auto">
+                            <div class="bg-gradient-light sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                <i data-acorn-icon="graduation" class="text-white"></i>
+                            </div>
+                        </div>
+                        <div class="col ps-3">
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="sh-4 d-flex align-items-center lh-1-25">Passed/Completed</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="sh-4 d-flex align-items-center fw-bold text-success">{{ $certProgressByStatus['passed'] ?? 0 }}</div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $totalCertificateAssignments > 0 ? (($certProgressByStatus['passed'] ?? 0) / $totalCertificateAssignments * 100) : 0 }}%" aria-valuenow="{{ $certProgressByStatus['passed'] ?? 0 }}" aria-valuemin="0" aria-valuemax="{{ $totalCertificateAssignments }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resources Status Start - Placed side by side on large screens -->
+<div class="row">
+    <div class="col-lg-6 mb-5">
+        <h2 class="small-title">Certification Providers</h2>
+        <div class="card h-100">
+            <div class="card-body">
+                @if($providerStats->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-muted text-small text-uppercase">Provider</th>
+                                    <th scope="col" class="text-muted text-small text-uppercase">Certificates</th>
+                                    <th scope="col" class="text-muted text-small text-uppercase text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($providerStats as $provider)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                @if($provider->logo)
+                                                    <div class="me-2">
+                                                        <img src="{{ asset('storage/' . $provider->logo) }}" alt="{{ $provider->name }}" class="rounded-xl" width="32" height="32">
+                                                    </div>
+                                                @else
+                                                    <div class="me-2 bg-primary p-2 text-white rounded-xl d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                                        <i data-acorn-icon="building"></i>
+                                                    </div>
+                                                @endif
+                                                <span>{{ $provider->name }}</span>
+                                            </div>
+                                        </td>
+                                        <td>{{ $provider->certificates_count }}</td>
+                                        <td class="text-end">
+                                            <a href="{{ route('admin.providers.index') }}" class="btn btn-sm btn-icon btn-outline-primary ms-1">
+                                                <i data-acorn-icon="eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="text-center py-5">
+                        <i data-acorn-icon="building" class="text-muted mb-2" style="font-size: 3rem;"></i>
+                        <p class="text-muted">No providers available</p>
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
 
-    <!-- Content End -->
+    <div class="col-lg-6 mb-5">
+        <h2 class="small-title">Voucher Status</h2>
+        <div class="card h-max-100">
+            <div class="card-body">
+                <div class="row h-100">
+                    <div class="col-12 col-sm-6 d-flex flex-column justify-content-between">
+                        <div class="d-flex flex-column align-items-center mb-4">
+                            <div class="bg-gradient-light sw-6 sh-6 rounded-xl d-flex justify-content-center align-items-center mb-3">
+                                <i data-acorn-icon="tag" class="text-white"></i>
+                            </div>
+                            <div class="d-flex flex-column align-items-center">
+                                <p class="mb-0 text-muted">Available Vouchers</p>
+                                <p class="display-6 text-primary mb-0">{{ $availableVouchers }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('admin.vouchers.index', ['used' => '0']) }}" class="btn btn-sm btn-icon btn-icon-start btn-outline-primary">
+                                <i data-acorn-icon="eye"></i>
+                                <span>View Available</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 d-flex flex-column justify-content-between mt-4 mt-sm-0">
+                        <div class="d-flex flex-column align-items-center mb-4">
+                            <div class="bg-gradient-light sw-6 sh-6 rounded-xl d-flex justify-content-center align-items-center mb-3">
+                                <i data-acorn-icon="check" class="text-white"></i>
+                            </div>
+                            <div class="d-flex flex-column align-items-center">
+                                <p class="mb-0 text-muted">Used Vouchers</p>
+                                <p class="display-6 text-primary mb-0">{{ $usedVouchers }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('admin.vouchers.index', ['used' => '1']) }}" class="btn btn-sm btn-icon btn-icon-start btn-outline-primary">
+                                <i data-acorn-icon="eye"></i>
+                                <span>View Used</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-@endsection
+<!-- Resources Status End -->
+        
+        @push('scripts')
+        <script>
+            // Document ready function
+            document.addEventListener('DOMContentLoaded', function() {
+                // Chart js initialization
+                if (typeof Chart !== 'undefined') {
+                    // Monthly Activity Chart
+                    const internActivityCanvas = document.getElementById('internActivityChart');
+                    if (internActivityCanvas) {
+                        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        
+                        // Prepare data for the chart
+                        const signupData = Array(12).fill(0);
+                        const completionData = Array(12).fill(0);
+                        
+                        // Fill in actual data from the backend
+                        @foreach($monthlySignups as $monthData)
+                            signupData[{{ $monthData->month - 1 }}] = {{ $monthData->total }};
+                        @endforeach
+                        
+                        @foreach($monthlyCertificatesCompleted as $monthData)
+                            completionData[{{ $monthData->month - 1 }}] = {{ $monthData->total }};
+                        @endforeach
+                        
+                        const internActivityChart = new Chart(internActivityCanvas, {
+                            type: 'bar',
+                            data: {
+                                labels: monthNames,
+                                datasets: [
+                                    {
+                                        label: 'New Interns',
+                                        data: signupData,
+                                        backgroundColor: 'rgba(61, 142, 248, 0.2)',
+                                        borderColor: 'rgba(61, 142, 248, 1)',
+                                        borderWidth: 2,
+                                        borderRadius: 10,
+                                        yAxisID: 'y',
+                                    },
+                                    {
+                                        label: 'Completed Certificates',
+                                        data: completionData,
+                                        type: 'line',
+                                        backgroundColor: 'transparent',
+                                        borderColor: 'rgba(93, 203, 142, 1)',
+                                        borderWidth: 2,
+                                        pointBackgroundColor: 'rgba(93, 203, 142, 1)',
+                                        tension: 0.5,
+                                        yAxisID: 'y1',
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: 'New Interns'
+                                        }
+                                    },
+                                    y1: {
+                                        beginAtZero: true,
+                                        position: 'right',
+                                        grid: {
+                                            drawOnChartArea: false,
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Completed Certificates'
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                    tooltip: {
+                                        mode: 'index',
+                                        intersect: false,
+                                    }
+                                },
+                            }
+                        });
+                    }
+                    
+                    // Certification Status Chart
+                    const certStatusCanvas = document.getElementById('certificationStatusChart');
+                    if (certStatusCanvas) {
+                        const certStatusChart = new Chart(certStatusCanvas, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Not Taken', 'Scheduled', 'Passed', 'Failed'],
+                                datasets: [
+                                    {
+                                        data: [
+                                            {{ $certificationStatusData['notTaken'] }},
+                                            {{ $certificationStatusData['scheduled'] }},
+                                            {{ $certificationStatusData['passed'] }},
+                                            {{ $certificationStatusData['failed'] }}
+                                        ],
+                                        backgroundColor: [
+                                            'rgba(120, 120, 120, 0.7)',
+                                            'rgba(61, 142, 248, 0.7)',
+                                            'rgba(93, 203, 142, 0.7)',
+                                            'rgba(248, 92, 92, 0.7)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(120, 120, 120, 1)',
+                                            'rgba(61, 142, 248, 1)',
+                                            'rgba(93, 203, 142, 1)',
+                                            'rgba(248, 92, 92, 1)'
+                                        ],
+                                        borderWidth: 2
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                const label = context.label || '';
+                                                const value = context.raw || 0;
+                                                const total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                                const percentage = Math.round((value / total) * 100);
+                                                return `${label}: ${value} (${percentage}%)`;
+                                            }
+                                        }
+                                    }
+                                },
+                                cutout: '70%',
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+        @endpush
+        @endsection

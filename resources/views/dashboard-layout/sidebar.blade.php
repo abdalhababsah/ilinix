@@ -14,7 +14,7 @@
 
         <!-- Language Switch Start -->
         <div class="language-switch-container">
-            <button class="btn btn-empty language-button dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
+            <button class="btn btn-empty text-primary language-button dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">EN</button>
             <div class="dropdown-menu">
                 <a href="#" class="dropdown-item">DE</a>
@@ -28,7 +28,7 @@
         <div class="user-container d-flex">
             <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <img class="profile" alt="profile" src="img/profile/profile-3.webp" />
+                <i class="text-white profile" data-acorn-icon="user" data-acorn-size="18"></i>
                 <div class="name">
                   {{ Auth::user()->first_name ?? 'Unknown' }} {{ Auth::user()->last_name ?? 'Name' }}
                 </div>
@@ -212,6 +212,12 @@
                     <a href="{{ route('admin.mentors.index') }}">
                         <i data-acorn-icon="lecture" class="icon" data-acorn-size="18"></i>
                         <span class="label">Mentors</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('admin.vouchers.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.vouchers.index') }}">
+                        <i data-acorn-icon="tag" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Vouchers</span>
                     </a>
                 </li>
                 {{-- <li>

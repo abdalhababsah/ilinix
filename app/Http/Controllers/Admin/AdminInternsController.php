@@ -77,15 +77,23 @@ class AdminInternsController extends Controller
     public function show($id)
     {
         $intern = User::with([
-            'certificates.certificate',
-            'certificates.progress',
+            'certificates.certificate.provider',
+            'certificates.progress', // This will get the certificate progress records
+            'progressUpdates.course', // This will get the course progress records
+            'progressUpdates.certificate', // Get the certificate for each progress update
             'onboardingSteps.step',
+            'mentor',
+            'role',
         ])->findOrFail($id);
 
-        // ← Add this:
-        $mentors = User::where('role_id', 2)
-            ->orderBy('first_name')
-            ->get();
+        // Ensure the user is an intern (role_id = 3)
+        if ($intern->role_id !== 3) {
+            return redirect()->route('admin.interns.index')
+                             ->with('error', 'User is not an intern.');
+        }
+    
+        $mentors = User::where('role_id', 2)->get();
+    
         return view('admin.interns.show', compact('intern', 'mentors'));
     }
 

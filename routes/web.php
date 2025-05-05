@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAdminsController;
 use App\Http\Controllers\Admin\AdminCertificateProgramsController;
 use App\Http\Controllers\Admin\AdminMentorsController;
+use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\Mentor\MentorDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
  */
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('vouchers', AdminVoucherController::class)->except(['show', 'create', 'edit']);
 
     // Interns 
     Route::resource('interns', AdminInternsController::class);

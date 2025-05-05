@@ -13,7 +13,7 @@ class DashboardController extends Controller
 
         switch ($role) {
             case 1: // admin
-                return view("admin.dashboard");
+                return redirect()->route("admin.dashboard");
             case 2: // mintor
                 return redirect()->route('mintor.dashboard');
             case 3: // intern

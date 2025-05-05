@@ -97,7 +97,7 @@
                     <p class="card-text text-muted mb-1">{{ $intern->email }}</p>
                     <p class="card-text"><small>Status: <span class="badge bg-{{ $intern->status=='active'?'success':($intern->status=='completed'?'primary':'warning') }}">{{ ucfirst($intern->status) }}</span></small></p>
                 </div>
-                <div class="card-footer bg-white text-end">
+                <div class="card-footer text-end">
                     <a href="{{ route('admin.interns.show', $intern->id) }}" class="btn btn-sm btn-outline-primary">
                         <i data-acorn-icon="eye" class="me-1"></i> View
                     </a>

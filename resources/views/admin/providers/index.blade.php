@@ -42,13 +42,29 @@
                            value="{{ request('name') }}">
                 </div>
                 <div class="col-md-4 d-grid">
-                    <button class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary">
                         <i data-acorn-icon="search" class="me-1"></i> Filter
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Active Filters -->
+    @if(request('name'))
+    <div class="mb-4">
+        <div class="d-flex align-items-center">
+            <span class="me-2">Active filters:</span>
+            <div class="badge bg-primary me-2 py-2">
+                Name: {{ request('name') }}
+                <a href="{{ route('admin.providers.index') }}" class="text-white ms-2" style="text-decoration: none;">
+                    <i data-acorn-icon="close" class="text-white" style="height: 10px; width: 10px;"></i>
+                </a>
+            </div>
+            <a href="{{ route('admin.providers.index') }}" class="btn btn-sm btn-outline-primary">Clear all</a>
+        </div>
+    </div>
+    @endif
 
     <!-- Providers Table -->
     <div class="card shadow-sm">
@@ -105,7 +121,17 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No providers found.</td>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                @if(request('name'))
+                                    No providers found matching "{{ request('name') }}".
+                                    <br>
+                                    <a href="{{ route('admin.providers.index') }}" class="btn btn-sm btn-outline-primary mt-2">
+                                        Clear filters
+                                    </a>
+                                @else
+                                    No providers found.
+                                @endif
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>
