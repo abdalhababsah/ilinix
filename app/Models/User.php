@@ -12,9 +12,13 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'first_name', 'first_name', 'password',  'role_id', 'assigned_mentor_id'
+        'first_name', 'last_name','email', 'password',  'role_id', 'assigned_mentor_id'
     ];
 
+    public function mentees()
+{
+    return $this->hasMany(User::class, 'assigned_mentor_id');
+}
     protected $hidden = ['password', 'remember_token'];
 
     public function role(): BelongsTo

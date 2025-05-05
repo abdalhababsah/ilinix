@@ -27,6 +27,15 @@
 
             </div>
         </div>
+        @if($errors->any())
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
 
         <!-- Success or Error Messages -->
         @if (session('success'))
@@ -245,7 +254,7 @@
                                            
                                                 data-mentor="{{ $intern->assigned_mentor_id ?? '' }}"
                                                 data-bs-toggle="tooltip" title="Edit Intern">
-                                                <i class="bi bi-pencil"></i>
+                                                <i data-acorn-icon="pen"></i>
                                             </a>
                                             <button type="button" class="btn btn-sm btn-outline-danger"
                                                 data-bs-toggle="modal" data-bs-target="#deleteModal{{ $intern->id }}"
@@ -317,7 +326,7 @@
                 <div class="card-footer bg-white py-3">
                     <div class="row align-items-center">
                         <div class="col-md-6">
-                            {{ $interns->links() }}
+                            {{ $interns->links('vendor.pagination.bootstrap-4') }}
                         </div>
                         <div class="col-md-6">
                             @if (count($interns) > 0)

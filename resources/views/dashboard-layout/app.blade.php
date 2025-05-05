@@ -60,6 +60,7 @@
 </head>
 
 <body>
+    @stack('styles')
     <div id="root">
         @include('dashboard-layout.sidebar')
 

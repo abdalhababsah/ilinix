@@ -420,7 +420,7 @@
     <div class="container">
         <div class="logo-container">
             <a href="/">
-                <img src="{{ asset('dashboard/img/logo/ilinix-logo.png') }}" alt="Ilinix" class="logo">
+                <img src="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" alt="Ilinix" class="logo">
             </a>
         </div>
 

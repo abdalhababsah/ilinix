@@ -49,13 +49,6 @@
                             <div class="form-text">Default password: default123</div>
                         </div>
                         <div class="col-md-6">
-                            <label for="pin" class="form-label">PIN (Optional)</label>
-                            <input type="text" class="form-control" id="pin" name="pin" maxlength="10">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-12">
                             <label for="assigned_mentor_id" class="form-label">Assigned Mentor</label>
                             <select class="form-select" id="assigned_mentor_id" name="assigned_mentor_id">
                                 <option value="">None</option>

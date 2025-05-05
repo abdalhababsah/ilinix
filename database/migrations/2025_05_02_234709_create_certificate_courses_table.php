@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('certificate_courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('certificate_id')->constrained('certificate_programs')->cascadeOnDelete();
+            $table->foreignId('certificate_program_id')->constrained('certificate_programs')->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
             $table->text('resource_link')->nullable();
+            $table->text('digital_link')->nullable();
             $table->integer('estimated_minutes')->nullable();
             $table->integer('step_order')->nullable();
             $table->timestamps();
