@@ -39,7 +39,7 @@ class ProviderController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo' => 'nullable|image',
         ]);
 
         if ($request->hasFile('logo')) {

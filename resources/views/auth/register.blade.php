@@ -7,15 +7,28 @@
 
         <!-- Name -->
         <div class="form-group">
-            <label for="name" class="form-label">Name</label>
+            <label for="first_name" class="form-label">First Name</label>
             <div class="form-input-container">
                 <svg class="form-input-icon icon-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                 </svg>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus
+                <input type="text" id="first_name" name="first_name" value="{{ old('name') }}" required autofocus
                        class="form-input" placeholder="Full Name">
             </div>
-            @error('name')
+            @error('first_name')
+                <div class="form-error">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="last_name" class="form-label">Last Name</label>
+            <div class="form-input-container">
+                <svg class="form-input-icon icon-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <input type="text" id="last_name" name="last_name" value="{{ old('name') }}" required autofocus
+                       class="form-input" placeholder="Full Name">
+            </div>
+            @error('last_name')
                 <div class="form-error">{{ $message }}</div>
             @enderror
         </div>

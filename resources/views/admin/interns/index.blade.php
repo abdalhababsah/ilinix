@@ -323,7 +323,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer bg-white py-3">
+                <div class="card-footer py-3">
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             {{ $interns->links('vendor.pagination.bootstrap-4') }}

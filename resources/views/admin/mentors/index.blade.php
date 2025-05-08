@@ -130,7 +130,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer bg-white py-3">
+            <div class="card-footer py-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <p class="mb-0 text-muted"><small>Showing {{ $mentors->firstItem() ?? 0 }} to

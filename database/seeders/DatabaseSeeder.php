@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         
         // Base roles and users
         $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class); // Creates admin and mentors
         $this->call(AdminMentorSeeder::class); // Creates admin and mentors
         $this->call(VoucherSeeder::class);
 

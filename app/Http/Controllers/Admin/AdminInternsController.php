@@ -52,7 +52,7 @@ class AdminInternsController extends Controller
 
     public function create()
     {
-        
+
     }
 
     public function store(Request $request)
@@ -89,17 +89,17 @@ class AdminInternsController extends Controller
         // Ensure the user is an intern (role_id = 3)
         if ($intern->role_id !== 3) {
             return redirect()->route('admin.interns.index')
-                             ->with('error', 'User is not an intern.');
+                ->with('error', 'User is not an intern.');
         }
-    
+
         $mentors = User::where('role_id', 2)->get();
-    
+
         return view('admin.interns.show', compact('intern', 'mentors'));
     }
 
     public function edit($id)
     {
-       
+
     }
 
     public function update(Request $request, $id)

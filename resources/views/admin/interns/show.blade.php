@@ -734,10 +734,9 @@
                                             <thead>
                                                 <tr>
                                                     <th width="50">#</th>
-                                                    <th>Step Name</th>
+                                                    <th  width="60%">Step Name</th>
                                                     <th>Status</th>
                                                     <th>Completed At</th>
-                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -746,7 +745,7 @@
                                                         <td>{{ $onboardingStep->step->order ?? $loop->iteration }}</td>
                                                         <td>
                                                             <div class="fw-medium">
-                                                                {{ $onboardingStep->step->name ?? 'Unknown Step' }}</div>
+                                                                {{ $onboardingStep->step->title ?? 'Unknown Step' }}</div>
                                                             <div class="text-muted small">
                                                                 {!! nl2br(e( $onboardingStep->step->description ?? '' )) !!}</div>
                                                         </td>
@@ -763,23 +762,7 @@
                                                                 <span class="text-muted">-</span>
                                                             @endif
                                                         </td>
-                                                        <td>
-                                                            @if (!$onboardingStep->completed)
-                                                                <button type="button"
-                                                                    class="btn btn-sm btn-outline-success mark-complete-btn"
-                                                                    data-step-id="{{ $onboardingStep->id }}">
-                                                                    <i data-acorn-icon="check" class="me-1"></i> Mark
-                                                                    Complete
-                                                                </button>
-                                                            @else
-                                                                <button type="button"
-                                                                    class="btn btn-sm btn-outline-warning mark-incomplete-btn"
-                                                                    data-step-id="{{ $onboardingStep->id }}">
-                                                                    <i data-acorn-icon="refresh" class="me-1"></i> Mark
-                                                                    Incomplete
-                                                                </button>
-                                                            @endif
-                                                        </td>
+                                                        
                                                     </tr>
                                                 @endforeach
                                             </tbody>

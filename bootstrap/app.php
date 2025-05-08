@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckOnboardingCompletion;
 use App\Http\Middleware\InternMiddleware;
 use App\Http\Middleware\MintorMiddleware;
 use Illuminate\Foundation\Application;
@@ -16,8 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => AdminMiddleware::class,
-            'mintor' => MintorMiddleware::class,
+            'mentor' => MintorMiddleware::class,
             'intern' => InternMiddleware::class,
+            'check.onboarding' => CheckOnboardingCompletion::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

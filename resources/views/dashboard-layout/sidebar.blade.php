@@ -14,8 +14,8 @@
 
         <!-- Language Switch Start -->
         <div class="language-switch-container">
-            <button class="btn btn-empty text-primary language-button dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">EN</button>
+            <button class="btn btn-empty text-primary language-button dropdown-toggle" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">EN</button>
             <div class="dropdown-menu">
                 <a href="#" class="dropdown-item">DE</a>
                 <a href="#" class="dropdown-item active">EN</a>
@@ -30,7 +30,7 @@
                 aria-expanded="false">
                 <i class="text-white profile" data-acorn-icon="user" data-acorn-size="18"></i>
                 <div class="name">
-                  {{ Auth::user()->first_name ?? 'Unknown' }} {{ Auth::user()->last_name ?? 'Name' }}
+                    {{ Auth::user()->first_name ?? 'Unknown' }} {{ Auth::user()->last_name ?? 'Name' }}
                 </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end user-menu wide">
@@ -43,18 +43,12 @@
                             <li>
                                 <a href="#">Themes</a>
                             </li>
-                            <li>
-                                <a href="#">Language</a>
-                            </li>
                         </ul>
                     </div>
                     <div class="col-6 pe-1 ps-1">
                         <ul class="list-unstyled">
                             <li>
                                 <a href="#">Devices</a>
-                            </li>
-                            <li>
-                                <a href="#">Storage</a>
                             </li>
                         </ul>
                     </div>
@@ -65,31 +59,25 @@
                     </div>
                     <div class="col-6 ps-1 pe-1">
                         <ul class="list-unstyled">
-                            <li>
-                                <a href="#">
-                                    <i data-acorn-icon="help" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Help</span>
+                            <li style="margin-top: 5px;">
+                                <a href="#" >
+                                    <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
+                                    <span class="align-middle">Settings</span>
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </div>
                     <div class="col-6 pe-1 ps-1">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="#">
-                                    <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                              <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-link dropdown-item">
-                                  <i data-acorn-icon="logout" class="me-2" data-acorn-size="17"></i>
-                                  <span class="align-middle">Logout</span>
-                                </button>
-                              </form>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link dropdown-item">
+                                        <i data-acorn-icon="logout" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Logout</span>
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -136,21 +124,21 @@
                                 </div>
                             </li>
                             <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                <img src="img/profile/profile-2.webp"
+                                <img src="{{ asset('dashboard-assets/img/profile/profile-2.webp') }}"
                                     class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
                                 <div class="align-self-center">
                                     <a href="#">New order received! It is total $147,20.</a>
                                 </div>
                             </li>
                             <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                <img src="img/profile/profile-3.webp"
+                                <img src="{{asset('dashboard-assets/img/profile/profile-3.webp')}}"
                                     class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
                                 <div class="align-self-center">
                                     <a href="#">3 items just added to wish list by a user!</a>
                                 </div>
                             </li>
                             <li class="pb-3 pb-3 border-bottom border-separator-light d-flex">
-                                <img src="img/profile/profile-6.webp"
+                                <img src="{{ asset('dashboard-assets/img/profile/profile-6.webp') }}"
                                     class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
                                 <div class="align-self-center">
                                     <a href="#">Kirby Peters just sent a new message!</a>
@@ -172,96 +160,89 @@
                         <span class="label">Dashboards</span>
                     </a>
                 </li>
-                <li class="{{ request()->routeIs('admin.interns.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.interns.index') }}">
-                        <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
-                        <span class="label">Interns</span>
-                    </a>
-                </li>
-                <li class="{{ request()->routeIs('admin.admins.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.admins.index') }}">
-                        <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
-                        <span class="label">Admins</span>
-                    </a>
-                </li>
-                <li
-                    class="{{ request()->routeIs('admin.certificate-programs.*') || request()->routeIs('admin.providers.index') ? 'active' : '' }}">
-                    <a href="#quiz">
-                        <i data-acorn-icon="quiz" class="icon" data-acorn-size="18"></i>
-                        <span class="label">Certificates</span>
-                    </a>
-                    <ul id="quiz">
-                        <li class="{{ request()->routeIs('admin.certificate-programs.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.certificate-programs.index') }}">
-                                <span class="label">Certificates</span>
-                            </a>
-                        </li>
-                        <li class="{{ request()->routeIs('admin.certificate-programs.create') ? 'active' : '' }}">
-                            <a href="{{ route('admin.certificate-programs.create') }}">
-                                <span class="label">New Certificate</span>
-                            </a>
-                        </li>
-                        <li class="{{ request()->routeIs('admin.providers.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.providers.index') }}">
-                                <span class="label">Certificate Providers</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="{{ request()->routeIs('admin.mentors.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.mentors.index') }}">
-                        <i data-acorn-icon="lecture" class="icon" data-acorn-size="18"></i>
-                        <span class="label">Mentors</span>
-                    </a>
-                </li>
-                <li class="{{ request()->routeIs('admin.vouchers.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.vouchers.index') }}">
-                        <i data-acorn-icon="tag" class="icon" data-acorn-size="18"></i>
-                        <span class="label">Vouchers</span>
-                    </a>
-                </li>
-                {{-- <li>
-            <a href="#paths">
-              <i data-acorn-icon="destination" class="icon" data-acorn-size="18"></i>
-              <span class="label">List</span>
-            </a>
-            <ul id="paths">
-              <li>
-                <a href="Path.List.html">
-                  <span class="label">List</span>
-                </a>
-              </li>
-              <li>
-                <a href="Path.Detail.html">
-                  <span class="label">Detail</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-      
-          <li>
-            <a href="#miscellaneous">
-              <i data-acorn-icon="layout-5" class="icon" data-acorn-size="18"></i>
-              <span class="label">Miscellaneous</span>
-            </a>
-            <ul id="miscellaneous">
-              <li>
-                <a href="Misc.Player.html">
-                  <span class="label">Player</span>
-                </a>
-              </li>
-              <li>
-                <a href="Misc.Material.html">
-                  <span class="label">Material</span>
-                </a>
-              </li>
-              <li>
-                <a href="Misc.Syllabus.html">
-                  <span class="label">Syllabus</span>
-                </a>
-              </li>
-            </ul>
-          </li> --}}
+                @if (Auth::user()->role_id == 1)
+                    <li class="{{ request()->routeIs('admin.interns.index') ? 'active' : '' }}">
+                        <a href="{{ route('admin.interns.index') }}">
+                            <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Interns</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.admins.index') ? 'active' : '' }}">
+                        <a href="{{ route('admin.admins.index') }}">
+                            <i data-acorn-icon="online-class" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Admins</span>
+                        </a>
+                    </li>
+                    <li
+                        class="{{ request()->routeIs('admin.certificate-programs.*') || request()->routeIs('admin.providers.index') ? 'active' : '' }}">
+                        <a href="#quiz">
+                            <i data-acorn-icon="quiz" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Certificates</span>
+                        </a>
+                        <ul id="quiz">
+                            <li class="{{ request()->routeIs('admin.certificate-programs.index') ? 'active' : '' }}">
+                                <a href="{{ route('admin.certificate-programs.index') }}">
+                                    <span class="label">Certificates</span>
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('admin.certificate-programs.create') ? 'active' : '' }}">
+                                <a href="{{ route('admin.certificate-programs.create') }}">
+                                    <span class="label">New Certificate</span>
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('admin.providers.index') ? 'active' : '' }}">
+                                <a href="{{ route('admin.providers.index') }}">
+                                    <span class="label">Certificate Providers</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.mentors.index') ? 'active' : '' }}">
+                        <a href="{{ route('admin.mentors.index') }}">
+                            <i data-acorn-icon="lecture" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Mentors</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.vouchers.index') ? 'active' : '' }}">
+                        <a href="{{ route('admin.vouchers.index') }}">
+                            <i data-acorn-icon="tag" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Vouchers</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.onboarding.index') ? 'active' : '' }}">
+                        <a href="{{ route('admin.onboarding.index') }}">
+                            <i data-acorn-icon="graduation" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Interns Onboarding</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('chat.index') ? 'active' : '' }}">
+                        <a href="{{ route('chat.index') }}">
+                            <i data-acorn-icon="message" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Chat</span>
+                        </a>
+                    </li>
+                @elseif (Auth::user()->role_id == 2)
+                    <li class="{{ request()->routeIs('chat.index') ? 'active' : '' }}">
+                        <a href="{{ route('chat.index') }}">
+                            <i data-acorn-icon="message" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Chat</span>
+                        </a>
+                    </li>
+                @elseif (Auth::user()->role_id == 3)
+
+                    <li class="{{ request()->routeIs('intern.certificates.index') ? 'active' : '' }}">
+                        <a href="{{ route('intern.certificates.index') }}">
+                            <i data-acorn-icon="quiz" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Certificates</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('chat.index') ? 'active' : '' }}">
+                        <a href="{{ route('chat.index') }}">
+                            <i data-acorn-icon="message" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Chat</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- Menu End -->

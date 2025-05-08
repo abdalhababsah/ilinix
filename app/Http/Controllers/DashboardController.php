@@ -15,7 +15,7 @@ class DashboardController extends Controller
             case 1: // admin
                 return redirect()->route("admin.dashboard");
             case 2: // mintor
-                return redirect()->route('mintor.dashboard');
+                return redirect()->route('mentor.dashboard');
             case 3: // intern
                 return redirect()->route('intern.dashboard');
             default:
