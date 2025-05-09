@@ -19,9 +19,7 @@
         </div>
     </div>
     <!-- Title and Top Buttons End -->
-
     <!-- Content Start -->
-
     <div class="row">
         <!-- Continue Learning Start -->
         <div class="col-xl-6 mb-5">

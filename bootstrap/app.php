@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CheckOnboardingCompletion;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\InternMiddleware;
 use App\Http\Middleware\MintorMiddleware;
 use Illuminate\Foundation\Application;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'mentor' => MintorMiddleware::class,
             'intern' => InternMiddleware::class,
             'check.onboarding' => CheckOnboardingCompletion::class,
+            'web' => HandleInertiaRequests::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

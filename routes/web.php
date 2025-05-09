@@ -126,31 +126,40 @@ Route::middleware(['auth', 'intern'])->prefix('intern')->name('intern.')->group(
 
 // Main chat interface
 Route::middleware(['auth'])->group(function () {
-    // Chat interface
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Chat interface using Inertia
+    Route::get('/chat', [ChatController::class, 'index'])
+         ->name('chat.index')
+         ->middleware('web'); // Apply the Inertia middleware
 
-    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    // Conversations API
+    Route::post('/chat/conversations', [ChatController::class, 'getOrCreateConversation'])
+         ->name('chat.conversations.create');
+    
+    Route::get('/chat/conversations/{id}/messages', [ChatController::class, 'getMessages'])
+         ->name('chat.conversations.messages');
+    
+    Route::post('/chat/conversations/read', [ChatController::class, 'markAsRead'])
+         ->name('chat.conversations.read');
 
-    // Conversations
-    Route::post('/chat/conversations', [ChatController::class, 'getOrCreateConversation'])->name('chat.conversations.create');
-    Route::get('/chat/conversations/{id}/messages', [ChatController::class, 'getMessages'])->name('chat.conversations.messages');
-    Route::post('/chat/conversations/read', [ChatController::class, 'markAsRead'])->name('chat.conversations.read');
-
-    // Messages
-    Route::post('/chat/messages', [ChatController::class, 'sendMessage'])->name('chat.messages.send');
-    Route::delete('/chat/messages/{id}', [ChatController::class, 'deleteMessage'])->name('chat.messages.delete');
+    // Messages API
+    Route::post('/chat/messages', [ChatController::class, 'sendMessage'])
+         ->name('chat.messages.send');
+    
+    Route::delete('/chat/messages/{id}', [ChatController::class, 'deleteMessage'])
+         ->name('chat.messages.delete');
 
     // Attachments
-    Route::get('/chat/attachments/{id}/download', [ChatController::class, 'downloadAttachment'])->name('chat.attachments.download');
+    Route::get('/chat/attachments/{id}/download', [ChatController::class, 'downloadAttachment'])
+         ->name('chat.attachments.download');
+         Route::post('/chat/heartbeat', [ChatController::class, 'heartbeat'])->name('chat.heartbeat');
 
     // User Status
-    Route::post('/chat/status', [ChatController::class, 'updateStatus'])->name('chat.status.update');
+    Route::post('/chat/status', [ChatController::class, 'updateStatus'])
+         ->name('chat.status.update');
 });
 
 // Pusher Authentication
-
-
-
 Route::post('/broadcasting/auth', function (Request $request) {
     return Broadcast::auth($request);
 })->middleware(['web', 'auth:sanctum']);

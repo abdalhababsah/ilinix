@@ -4,7 +4,7 @@
         <div class="logo position-relative">
             <a href="index.html">
                 <!-- Logo can be added directly -->
-                <img src="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" alt="logo" />
+                <img src="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" alt="logo" />
 
                 <!-- Or added via css to provide different ones for different color themes -->
                 {{-- <div class="img"></div> --}}
