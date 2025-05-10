@@ -232,7 +232,14 @@
     <link rel="stylesheet" href="{{ asset('home/home.min.css') }}">
 </head>
 <style>
-
+@media (max-width: 768px) {
+    .cursor-outline {
+        display: none !important;
+    }
+    .cursor-dot {
+        display: none !important;
+    }
+}
 </style>
 
 <body>
@@ -628,7 +635,7 @@
         </div>
     </section>
 
-    {{-- <!-- Application Form -->
+    <!-- Application Form -->
     <section class="application" id="apply">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
@@ -710,7 +717,7 @@
                 </form>
             </div>
         </div>
-    </section> --}}
+    </section>
 
     <!-- Footer -->
     <footer>

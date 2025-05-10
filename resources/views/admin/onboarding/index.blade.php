@@ -46,7 +46,6 @@
                                             <th>Title</th>
                                             <th>Description</th>
                                             <th width="160">Resource</th>
-                                            <th width="140">Completion</th>
                                             <th width="140">Actions</th>
                                         </tr>
                                     </thead>
@@ -73,28 +72,7 @@
                                                         <span class="text-muted">No resource</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    @php
-                                                        $completedCount = $step->userOnboardingSteps
-                                                            ->where('is_completed', true)
-                                                            ->count();
-                                                        $totalCount = $step->userOnboardingSteps->count();
-                                                        $completionRate =
-                                                            $totalCount > 0
-                                                                ? round(($completedCount / $totalCount) * 100)
-                                                                : 0;
-                                                    @endphp
-                                                    <div class="progress mb-2" style="height: 8px;">
-                                                        <div class="progress-bar bg-primary" role="progressbar"
-                                                            style="width: {{ $completionRate }}%;"
-                                                            aria-valuenow="{{ $completionRate }}" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <div class="text-muted small text-center">
-                                                        {{ $completionRate }}%
-                                                        ({{ $completedCount }}/{{ $internsCount }})
-                                                    </div>
-                                                </td>
+                                             
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <a href="{{ route('admin.onboarding.edit', $step->id) }}"
