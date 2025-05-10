@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://ilinix.com/">
 <meta property="og:title" content="ilinix | Modern Cloud Contact Center Solutions">
 <meta property="og:description" content="AI-enriched contact center solutions that help businesses create exceptional customer experiences. No upfront payments, no long-term commitments.">
-<meta property="og:image" content="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
+<meta property="og:image" content="https://red-aardvark-760135.hostingersite.com/dashboard-assets/img/logo/ilinix-logo.png">
 <meta property="og:site_name" content="ilinix">
 
 <!-- Twitter Card Meta Tags -->
@@ -27,14 +27,14 @@
 <meta name="twitter:site" content="@ilinix">
 <meta name="twitter:title" content="ilinix | AI-Powered Cloud Contact Center Solutions">
 <meta name="twitter:description" content="Transform your customer service with ilinix's omnichannel contact center platform. Smart IVR, real-time analytics, and seamless CRM integration.">
-<meta name="twitter:image" content="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
+<meta name="twitter:image" content="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
 
 <!-- Favicon -->
-<link rel="icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" type="image/svg+xml">
-<link rel="shortcut icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" type="image/svg+xml">
-<link rel="apple-touch-icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
-<link rel="icon" type="image/svg+xml" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
-<link rel="mask-icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" color="#4285f4">
+<link rel="icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" type="image/svg+xml">
+<link rel="shortcut icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
+<link rel="icon" type="image/svg+xml" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
+<link rel="mask-icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" color="#4285f4">
 
 <!-- Theme Color -->
 <meta name="theme-color" content="#4285f4">
@@ -58,7 +58,7 @@
   "@type": "Organization",
   "name": "ilinix",
   "url": "https://ilinix.com",
-  "logo": "{{ asset('dashboard-assets/img/logo/logo-white.svg') }}",
+  "logo": "{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}",
   "description": "AI-enriched cloud contact center solutions provider offering omnichannel customer experience platforms.",
   "sameAs": [
     "https://www.facebook.com/ilinix",
@@ -162,7 +162,7 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "ilinix Cloud Contact Center",
-  "image": "{{ asset('dashboard-assets/img/logo/logo-white.svg') }}",
+  "image": "{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}",
   "description": "AI-powered cloud contact center platform with omnichannel support, smart IVR, and seamless CRM integration.",
   "brand": {
     "@type": "Brand",
