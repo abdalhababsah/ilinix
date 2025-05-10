@@ -254,7 +254,7 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">
+                <a href="{{ route('home') }}" class="logo">
                     <img style=" height: 30px !important;" src="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" alt="">
                     <span class="logo-dot"></span>
                 </a>

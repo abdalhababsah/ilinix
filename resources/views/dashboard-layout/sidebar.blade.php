@@ -2,7 +2,7 @@
     <div class="nav-content d-flex">
         <!-- Logo Start -->
         <div class="logo position-relative">
-            <a href="index.html">
+            <a href="{{ route('dashboard') }}" >
                 <!-- Logo can be added directly -->
                 <img src="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" alt="logo" />
 
