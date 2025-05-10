@@ -58,53 +58,131 @@ class InternCertificateController extends Controller
     /**
      * Show the details of a specific certificate including courses and progress
      */
-    public function show($id)
-    {
-        $user = Auth::user();
+/**
+ * Show the details of a specific certificate including courses and progress
+ */
+public function show($id)
+{
+    $user = Auth::user();
+    
+    $internCertificate = InternCertificate::where('user_id', $user->id)
+        ->where('id', $id)
+        ->with([
+            'certificate.provider',
+            'certificate.courses',
+            'progress'
+        ])
+        ->firstOrFail();
+    
+    // Get progress updates separately and eager load courses
+    $progressUpdates = ProgressUpdate::where('intern_id', $user->id)
+        ->where('certificate_id', $internCertificate->certificate_id)
+        ->with('course')
+        ->get();
+    
+    // Manually attach progress updates to avoid the relationship error
+    $internCertificate->setAttribute('progressUpdates', $progressUpdates);
+    
+    // Get the latest progress status
+    $latestProgress = $internCertificate->progress()
+        ->latest()
+        ->first();
+    
+    // Calculate percentage complete based on completed courses
+    $totalCourses = $internCertificate->certificate->courses->count();
+    $completedCourses = $progressUpdates->where('is_completed', true)->count();
+    
+    $percentComplete = $totalCourses > 0 
+        ? round(($completedCourses / $totalCourses) * 100) 
+        : 0;
         
-        $internCertificate = InternCertificate::where('user_id', $user->id)
-            ->where('id', $id)
-            ->with([
-                'certificate.provider',
-                'certificate.courses',
-                'progress'
-            ])
-            ->firstOrFail();
+    // Check if voucher request already exists - for view to disable button
+    $voucherRequestExists = CertificateProgress::where('intern_certificate_id', $internCertificate->id)
+        ->where('study_status', 'requested_voucher')
+        ->exists();
+    
+    // Prepare course data for the view to prevent Blade from doing queries
+    $coursesWithProgress = [];
+    
+    foreach ($internCertificate->certificate->courses->sortBy('step_order') as $course) {
+        $progressUpdate = $progressUpdates->where('course_id', $course->id)->first();
         
-        // Get progress updates separately and eager load courses
-        $progressUpdates = ProgressUpdate::where('intern_id', $user->id)
-            ->where('certificate_id', $internCertificate->certificate_id)
-            ->with('course')
-            ->get();
+        $courseData = [
+            'id' => $course->id,
+            'step_order' => $course->step_order,
+            'title' => $course->title,
+            'description' => $course->description,
+            'estimated_minutes' => $course->estimated_minutes,
+            'resource_link' => $course->resource_link,
+            'digital_link' => $course->digital_link,
+            'is_completed' => $progressUpdate ? $progressUpdate->is_completed : false,
+            'comment' => $progressUpdate ? $progressUpdate->comment : '',
+            'proof_url' => $progressUpdate ? $progressUpdate->proof_url : '',
+            'can_update' => $progressUpdate ? !$progressUpdate->is_completed : true
+        ];
         
-        // Manually attach progress updates to avoid the relationship error
-        $internCertificate->setAttribute('progressUpdates', $progressUpdates);
-        
-        // Get the latest progress status
-        $latestProgress = $internCertificate->progress()
-            ->latest()
-            ->first();
-        
-        // Calculate percentage complete based on completed courses
-        $totalCourses = $internCertificate->certificate->courses->count();
-        $completedCourses = $progressUpdates->where('is_completed', true)->count();
-        
-        $percentComplete = $totalCourses > 0 
-            ? round(($completedCourses / $totalCourses) * 100) 
-            : 0;
-            
-        // Check if voucher was already requested - for view to disable button
-        $voucherRequested = CertificateProgress::where('intern_certificate_id', $internCertificate->id)
-            ->where('study_status', 'requested_voucher')
-            ->exists();
-        
-        return view('intern.certificates.show', compact(
-            'internCertificate',
-            'latestProgress',
-            'percentComplete',
-            'voucherRequested'
-        ));
+        $coursesWithProgress[] = $courseData;
     }
+    
+    // Check if all courses are completed (for voucher request eligibility)
+    $allCoursesCompleted = $totalCourses > 0 && $completedCourses === $totalCourses;
+    
+    // Organize progress timeline data
+    $progressTimeline = $internCertificate->progress
+        ->sortByDesc('created_at')
+        ->map(function($progress) {
+            // Map status to appropriate icon and badge color
+            $iconMap = [
+                'in_progress' => 'clock',
+                'studying_for_exam' => 'book',
+                'requested_voucher' => 'tag',
+                'took_exam' => 'file-text',
+                'passed' => 'check',
+                'failed' => 'close'
+            ];
+            
+            $badgeMap = [
+                'in_progress' => 'warning',
+                'studying_for_exam' => 'info',
+                'requested_voucher' => 'primary',
+                'took_exam' => 'secondary',
+                'passed' => 'success',
+                'failed' => 'danger'
+            ];
+            
+            $statusTextMap = [
+                'in_progress' => 'In Progress',
+                'studying_for_exam' => 'Studying for Exam',
+                'requested_voucher' => 'Voucher Requested',
+                'took_exam' => 'Took Exam',
+                'passed' => 'Passed Exam',
+                'failed' => 'Failed Exam'
+            ];
+            
+            return [
+                'id' => $progress->id,
+                'icon' => $iconMap[$progress->study_status] ?? 'note',
+                'badge_color' => $badgeMap[$progress->study_status] ?? 'secondary',
+                'status_text' => $statusTextMap[$progress->study_status] ?? 'Unknown',
+                'notes' => $progress->notes,
+                'created_at' => $progress->created_at,
+                'updated_by_mentor' => $progress->updated_by_mentor,
+                'voucher_requested_at' => $progress->voucher_requested_at,
+                'exam_date' => $progress->exam_date
+            ];
+        })
+        ->toArray();
+
+    return view('intern.certificates.show', compact(
+        'internCertificate',
+        'latestProgress',
+        'percentComplete',
+        'voucherRequestExists',
+        'coursesWithProgress',
+        'allCoursesCompleted',
+        'progressTimeline'
+    ));
+}
     
     /**
      * Start a new certificate program
@@ -291,91 +369,94 @@ class InternCertificateController extends Controller
         }
     }
     
-    /**
-     * Update course progress for a certificate
-     */
-    public function updateCourseProgress(Request $request, $id)
-    {
-        $request->validate([
-            'course_id' => 'required|exists:certificate_courses,id',
-            'is_completed' => 'sometimes',
-            'comment' => 'nullable|string|max:500',
-            'proof_url' => 'nullable|url'
-        ]);
+/**
+ * Update course progress for a certificate
+ */
+public function updateCourseProgress(Request $request, $id)
+{
+    $request->validate([
+        'course_id' => 'required|exists:certificate_courses,id',
+        'is_completed' => 'sometimes',
+        'comment' => 'nullable|string|max:500',
+        'proof_url' => 'nullable|url'
+    ]);
+    
+    $user = Auth::user();
+    
+    $internCertificate = InternCertificate::where('user_id', $user->id)
+        ->where('id', $id)
+        ->firstOrFail();
+    
+    try {
+        // Check if this course already has a progress record
+        $existingProgress = ProgressUpdate::where('intern_id', $user->id)
+            ->where('certificate_id', $internCertificate->certificate_id)
+            ->where('course_id', $request->course_id)
+            ->first();
         
-        $user = Auth::user();
-        
-        $internCertificate = InternCertificate::where('user_id', $user->id)
-            ->where('id', $id)
-            ->firstOrFail();
-        
-        try {
-            // Check if this course already has a progress record
-            $existingProgress = ProgressUpdate::where('intern_id', $user->id)
-                ->where('certificate_id', $internCertificate->certificate_id)
-                ->where('course_id', $request->course_id)
-                ->first();
-            
-            // If the existing record is completed, prevent marking it as in-progress
-            if ($existingProgress && $existingProgress->is_completed && !$request->has('is_completed')) {
-                return redirect()->route('intern.certificates.show', $internCertificate->id)
-                    ->with('error', 'You cannot change a completed course back to in-progress.');
-            }
-            
-            if ($existingProgress) {
-                // Update existing progress
-                $existingProgress->update([
-                    'is_completed' => $request->has('is_completed'),
-                    'comment' => $request->comment,
-                    'proof_url' => $request->proof_url,
-                    'completed_at' => $request->has('is_completed') ? now() : null
-                ]);
-            } else {
-                // Create new progress record
-                ProgressUpdate::create([
-                    'intern_id' => $user->id,
-                    'certificate_id' => $internCertificate->certificate_id,
-                    'course_id' => $request->course_id,
-                    'is_completed' => $request->has('is_completed'),
-                    'comment' => $request->comment,
-                    'proof_url' => $request->proof_url,
-                    'completed_at' => $request->has('is_completed') ? now() : null
-                ]);
-            }
-            
-            // Check if all courses are completed
-            $completedCoursesCount = ProgressUpdate::where('intern_id', $user->id)
-                ->where('certificate_id', $internCertificate->certificate_id)
-                ->where('is_completed', true)
-                ->count();
-                
-            $totalCoursesCount = $internCertificate->certificate->courses->count();
-            
-            // If all courses are completed and no studying_for_exam progress exists, add one
-            if ($completedCoursesCount == $totalCoursesCount) {
-                $existingStudyingProgress = CertificateProgress::where('intern_certificate_id', $internCertificate->id)
-                    ->where('study_status', 'studying_for_exam')
-                    ->exists();
-                    
-                if (!$existingStudyingProgress) {
-                    // Add a certificate progress entry
-                    CertificateProgress::create([
-                        'intern_certificate_id' => $internCertificate->id,
-                        'study_status' => 'studying_for_exam',
-                        'notes' => 'All courses completed. Ready for exam preparation.',
-                        'updated_by_mentor' => false
-                    ]);
-                }
-            }
-            
+        // If the existing record is completed, prevent updating it entirely
+        if ($existingProgress && $existingProgress->is_completed) {
             return redirect()->route('intern.certificates.show', $internCertificate->id)
-                ->with('success', 'Course progress updated successfully!');
-                
-        } catch (\Exception $e) {
-            return redirect()->route('intern.certificates.show', $internCertificate->id)
-                ->with('error', 'Failed to update course progress: ' . $e->getMessage());
+                ->with('error', 'Course has already been marked as completed and cannot be updated.');
         }
+        
+        // Mark as completed can only go from false to true, never back
+        $isCompleted = $request->has('is_completed');
+        
+        if ($existingProgress) {
+            // Update existing progress
+            $existingProgress->update([
+                'is_completed' => $isCompleted,
+                'comment' => $request->comment,
+                'proof_url' => $request->proof_url,
+                'completed_at' => $isCompleted ? now() : null
+            ]);
+        } else {
+            // Create new progress record
+            ProgressUpdate::create([
+                'intern_id' => $user->id,
+                'certificate_id' => $internCertificate->certificate_id,
+                'course_id' => $request->course_id,
+                'is_completed' => $isCompleted,
+                'comment' => $request->comment,
+                'proof_url' => $request->proof_url,
+                'completed_at' => $isCompleted ? now() : null
+            ]);
+        }
+        
+        // Check if all courses are completed
+        $completedCoursesCount = ProgressUpdate::where('intern_id', $user->id)
+            ->where('certificate_id', $internCertificate->certificate_id)
+            ->where('is_completed', true)
+            ->count();
+            
+        $totalCoursesCount = $internCertificate->certificate->courses->count();
+        
+        // If all courses are completed and no studying_for_exam progress exists, add one
+        if ($completedCoursesCount == $totalCoursesCount) {
+            $existingStudyingProgress = CertificateProgress::where('intern_certificate_id', $internCertificate->id)
+                ->where('study_status', 'studying_for_exam')
+                ->exists();
+                
+            if (!$existingStudyingProgress) {
+                // Add a certificate progress entry
+                CertificateProgress::create([
+                    'intern_certificate_id' => $internCertificate->id,
+                    'study_status' => 'studying_for_exam',
+                    'notes' => 'All courses completed. Ready for exam preparation.',
+                    'updated_by_mentor' => false
+                ]);
+            }
+        }
+        
+        return redirect()->route('intern.certificates.show', $internCertificate->id)
+            ->with('success', 'Course progress updated successfully!');
+            
+    } catch (\Exception $e) {
+        return redirect()->route('intern.certificates.show', $internCertificate->id)
+            ->with('error', 'Failed to update course progress: ' . $e->getMessage());
     }
+}
     
     /**
      * View all completed certificates (e.g., for printing or sharing)

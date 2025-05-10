@@ -62,7 +62,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('upload-image', [AdminCertificateProgramsController::class, 'uploadImage'])->name('upload-image');
     Route::post('delete-image', [AdminCertificateProgramsController::class, 'deleteImage'])->name('delete-image');
 
-
+    Route::put('intern/{intern}/deactivate', [AdminInternsController::class, 'deactivate'])
+        ->name('intern.deactivate');
+    Route::put('intern/{intern}/activate', [AdminInternsController::class, 'activate'])
+        ->name('intern.activate');
     Route::resource('onboarding', AdminOnboardingController::class);
     // Step ordering and status updates
     Route::post('onboarding/update-order', [AdminOnboardingController::class, 'updateOrder'])->name('onboarding.update-order');
@@ -77,6 +80,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     
     Route::put('mentors/{mentor}/deactivate', [AdminMentorsController::class, 'deactivate'])
         ->name('mentors.deactivate');
+    Route::put('mentors/{mentor}/activate', [AdminMentorsController::class, 'activate'])
+        ->name('mentors.activate');
     Route::post('mentors/{mentor}/send-email', [AdminMentorsController::class, 'sendEmail'])
         ->name('mentors.send-email');
     // Optional: If you later separate mentors, adjust this
@@ -112,7 +117,7 @@ Route::prefix('mentor')->name('mentor.')->middleware(['auth', 'mentor'])->group(
  * INTERN ROUTES
  * ========================
  */
-Route::prefix('intern')->name('intern.')->middleware(['auth', 'intern', 'check.onboarding'])->group(function () {
+Route::prefix('intern')->name('intern.')->middleware(['auth','verified', 'intern', 'check.onboarding'])->group(function () {
     Route::get('/dashboard', [InternDashboardController::class, 'index'])->name('dashboard');
     Route::get('/sessions', [InternSessionController::class, 'show'])->name('sessions.show');
     // Routes for certificate and course detail views
@@ -129,7 +134,7 @@ Route::prefix('intern')->name('intern.')->middleware(['auth', 'intern', 'check.o
     Route::get('/certificates/achievements', [InternCertificateController::class, 'achievements'])->name('certificates.achievements');
 
 });
-Route::middleware(['auth', 'intern'])->prefix('intern')->name('intern.')->group(function () {
+Route::middleware(['auth', 'intern','verified'])->prefix('intern')->name('intern.')->group(function () {
     Route::get('/onboarding', [OnboardingController::class, 'index'])->name('onboarding');
     Route::post('/onboarding/complete-step', [OnboardingController::class, 'completeStep'])->name('onboarding.complete-step');
     Route::post('/onboarding/skip-step', [OnboardingController::class, 'skipStep'])->name('onboarding.skip-step');

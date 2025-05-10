@@ -162,7 +162,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('mentor.interns.show', $intern->id) }}"
-                                                        class="btn btn-sm btn-info">
+                                                        class="btn btn-sm btn-sm-admin btn-info">
                                                         <i class="fas fa-eye"></i> View
                                                     </a>
                                                 </td>

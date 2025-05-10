@@ -322,50 +322,6 @@ class AdminInternsController extends Controller
         }
     }
 
-    /**
-     * Batch action for multiple interns
-     */
-    public function batchAction(Request $request)
-    {
-        $request->validate([
-            'action' => 'required|string|in:delete,assign_mentor,change_status',
-            'intern_ids' => 'required|array',
-            'intern_ids.*' => 'exists:users,id',
-            'mentor_id' => 'required_if:action,assign_mentor|nullable|exists:users,id',
-            'status' => 'required_if:action,change_status|nullable|string|in:active,inactive,completed',
-        ]);
-
-        $count = 0;
-
-        switch ($request->action) {
-            case 'delete':
-                // Delete selected interns
-                User::whereIn('id', $request->intern_ids)->delete();
-                $count = count($request->intern_ids);
-                $message = "{$count} interns deleted successfully.";
-                break;
-
-            case 'assign_mentor':
-                // Assign mentor to selected interns
-                User::whereIn('id', $request->intern_ids)
-                    ->update(['assigned_mentor_id' => $request->mentor_id]);
-                $count = count($request->intern_ids);
-                $mentorName = User::find($request->mentor_id)->first_name . ' ' . User::find($request->mentor_id)->last_name;
-                $message = "{$count} interns assigned to {$mentorName} successfully.";
-                break;
-
-            case 'change_status':
-                // Change status of selected interns
-                User::whereIn('id', $request->intern_ids)
-                    ->update(['status' => $request->status]);
-                $count = count($request->intern_ids);
-                $message = "{$count} interns updated to status '{$request->status}' successfully.";
-                break;
-        }
-
-        return redirect()->route('admin.interns.index')
-            ->with('success', $message);
-    }
 
     /**
      * Statistics for dashboard
@@ -396,21 +352,26 @@ class AdminInternsController extends Controller
     }
 
     /**
-     * Download intern data as PDF
+     * Deactivate the specified Intern.
      */
-    public function downloadPdf($id)
+    public function deactivate($id)
     {
-        $intern = User::with([
-            'certificates.certificate.provider',
-            'certificates.progress',
-            'onboardingSteps.step',
-        ])->findOrFail($id);
-
-        $pdf = \PDF::loadView('admin.interns.pdf', compact('intern'));
-
-        return $pdf->download("intern_{$intern->id}_{$intern->first_name}_{$intern->last_name}.pdf");
+        $mentor = User::findOrFail($id);
+        $mentor->status = 'inactive';
+        $mentor->save();
+        return back()->with('success', 'Intern deactivated successfully.');
     }
 
+    /**
+     * Activate the specified Intern.
+     */
+    public function activate($id)
+    {
+        $mentor = User::findOrFail($id);
+        $mentor->status = 'active';
+        $mentor->save();
+        return back()->with('success', 'Intern activated successfully.');
+    }
     /**
      * Reset intern password
      */
@@ -426,7 +387,7 @@ class AdminInternsController extends Controller
         $intern->save();
 
         // Send email with new password
-        \Mail::to($intern->email)->send(new \App\Mail\PasswordReset(
+        Mail::to($intern->email)->send(new \App\Mail\PasswordReset(
             $intern->first_name,
             $password
         ));

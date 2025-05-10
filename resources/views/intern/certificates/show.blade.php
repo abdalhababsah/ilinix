@@ -22,19 +22,7 @@
             </div>
         </div>
 
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i data-acorn-icon="check" class="me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i data-acorn-icon="warning-hexagon" class="me-2"></i>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+        @include('components._messages')
 
         <div class="row">
             <!-- Certificate Overview Card -->
@@ -143,15 +131,8 @@
                                 </div>
                             </div>
 
-                            <!-- Voucher Status Section - CORRECTED -->
+                            <!-- Voucher Status Section - IMPROVED -->
                             <div class="mb-3">
-                                @php
-                                    // Check if voucher request already exists
-                                    $voucherRequestExists = $internCertificate->progress
-                                        ->where('study_status', 'requested_voucher')
-                                        ->count() > 0;
-                                @endphp
-                                
                                 <div class="d-flex justify-content-between text-muted small mb-1">
                                     <span>Voucher Status</span>
                                     <span>
@@ -166,15 +147,6 @@
                                 </div>
 
                                 @if (!$voucherRequestExists && !$internCertificate->completed_at)
-                                    @php
-                                        $allCoursesCompleted =
-                                            $internCertificate->certificate->courses->count() > 0 &&
-                                            $internCertificate->certificate->courses->count() ==
-                                                $internCertificate->progressUpdates
-                                                    ->where('is_completed', true)
-                                                    ->count();
-                                    @endphp
-
                                     <button type="button" class="btn btn-outline-primary btn-sm w-100 mt-2"
                                         data-bs-toggle="modal" data-bs-target="#requestVoucherModal"
                                         {{ !$allCoursesCompleted ? 'disabled' : '' }}
@@ -236,7 +208,7 @@
                                 <div class="p-4">
                                     <h6 class="mb-3">Course Checklist</h6>
 
-                                    @if ($internCertificate->certificate->courses->count() > 0)
+                                    @if (count($coursesWithProgress) > 0)
                                         <div class="table-responsive">
                                             <table class="table table-hover align-middle mb-0">
                                                 <thead class="table-light">
@@ -249,28 +221,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($internCertificate->certificate->courses->sortBy('step_order') as $course)
-                                                        @php
-                                                            $progressUpdate = $internCertificate->progressUpdates
-                                                                ->where('course_id', $course->id)
-                                                                ->first();
-                                                            $isCompleted = $progressUpdate
-                                                                ? $progressUpdate->is_completed
-                                                                : false;
-                                                        @endphp
+                                                    @foreach ($coursesWithProgress as $course)
                                                         <tr>
-                                                            <td>{{ $course->step_order }}</td>
+                                                            <td>{{ $course['step_order'] }}</td>
                                                             <td>
-                                                                <div class="fw-medium">{{ $course->title }}</div>
-                                                                @if ($course->description)
+                                                                <div class="fw-medium">{{ $course['title'] }}</div>
+                                                                @if ($course['description'])
                                                                     <div class="text-muted small">
-                                                                        {{ \Illuminate\Support\Str::limit(strip_tags($course->description), 80) }}
+                                                                        {{ \Illuminate\Support\Str::limit(strip_tags($course['description']), 80) }}
                                                                     </div>
                                                                 @endif
                                                             </td>
-                                                            <td>{{ $course->estimated_minutes ?? '--' }} minutes</td>
+                                                            <td>{{ $course['estimated_minutes'] ?? '--' }} minutes</td>
                                                             <td>
-                                                                @if ($isCompleted)
+                                                                @if ($course['is_completed'])
                                                                     <span class="badge bg-success"><i
                                                                             data-acorn-icon="check" class="me-1"></i>
                                                                         Completed</span>
@@ -282,8 +246,8 @@
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    @if ($course->resource_link)
-                                                                        <a href="{{ $course->resource_link }}"
+                                                                    @if ($course['resource_link'])
+                                                                        <a href="{{ $course['resource_link'] }}"
                                                                             target="_blank"
                                                                             class="btn btn-sm btn-outline-primary"
                                                                             data-bs-toggle="tooltip"
@@ -292,8 +256,8 @@
                                                                         </a>
                                                                     @endif
 
-                                                                    @if ($course->digital_link)
-                                                                        <a href="{{ $course->digital_link }}"
+                                                                    @if ($course['digital_link'])
+                                                                        <a href="{{ $course['digital_link'] }}"
                                                                             target="_blank"
                                                                             class="btn btn-sm btn-outline-primary"
                                                                             data-bs-toggle="tooltip"
@@ -302,17 +266,32 @@
                                                                         </a>
                                                                     @endif
 
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-outline-primary update-progress-btn"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#updateCourseProgressModal"
-                                                                        data-course-id="{{ $course->id }}"
-                                                                        data-course-title="{{ $course->title }}"
-                                                                        data-is-completed="{{ $isCompleted ? 1 : 0 }}"
-                                                                        data-comment="{{ $progressUpdate ? $progressUpdate->comment : '' }}"
-                                                                        data-proof-url="{{ $progressUpdate ? $progressUpdate->proof_url : '' }}">
-                                                                        <i data-acorn-icon="edit"></i>
-                                                                    </button>
+                                                                    <!-- Only show the update button if course is not completed -->
+                                                                    @if ($course['can_update'])
+                                                                        <button type="button"
+                                                                            class="btn btn-sm btn-outline-primary update-progress-btn"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#updateCourseProgressModal"
+                                                                            data-course-id="{{ $course['id'] }}"
+                                                                            data-course-title="{{ $course['title'] }}"
+                                                                            data-is-completed="{{ $course['is_completed'] ? 1 : 0 }}"
+                                                                            data-comment="{{ $course['comment'] }}"
+                                                                            data-proof-url="{{ $course['proof_url'] }}">
+                                                                            <i data-acorn-icon="edit"></i>
+                                                                        </button>
+                                                                    @else
+                                                                        <!-- Show view-only button for completed courses -->
+                                                                        <button type="button"
+                                                                            class="btn btn-sm btn-outline-secondary view-progress-btn"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#viewCourseProgressModal"
+                                                                            data-course-id="{{ $course['id'] }}"
+                                                                            data-course-title="{{ $course['title'] }}"
+                                                                            data-comment="{{ $course['comment'] }}"
+                                                                            data-proof-url="{{ $course['proof_url'] }}">
+                                                                            <i data-acorn-icon="eye"></i>
+                                                                        </button>
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -335,98 +314,42 @@
                                 <div class="p-4">
                                     <h6 class="mb-3">Progress Timeline</h6>
 
-                                    @if ($internCertificate->progress->count() > 0)
+                                    @if (count($progressTimeline) > 0)
                                         <div class="timeline mb-3">
-                                            @foreach ($internCertificate->progress->sortByDesc('created_at') as $progress)
+                                            @foreach ($progressTimeline as $progress)
                                                 <div class="timeline-item">
                                                     <div class="timeline-icon bg-primary">
-                                                        @php
-                                                            $icon = 'note';
-                                                            switch ($progress->study_status) {
-                                                                case 'in_progress':
-                                                                    $icon = 'clock';
-                                                                    break;
-                                                                case 'studying_for_exam':
-                                                                    $icon = 'book';
-                                                                    break;
-                                                                case 'requested_voucher':
-                                                                    $icon = 'tag';
-                                                                    break;
-                                                                case 'took_exam':
-                                                                    $icon = 'file-text';
-                                                                    break;
-                                                                case 'passed':
-                                                                    $icon = 'check';
-                                                                    break;
-                                                                case 'failed':
-                                                                    $icon = 'close';
-                                                                    break;
-                                                            }
-                                                        @endphp
-                                                        <i data-acorn-icon="{{ $icon }}" class="text-white"></i>
+                                                        <i data-acorn-icon="{{ $progress['icon'] }}" class="text-white"></i>
                                                     </div>
                                                     <div class="timeline-content">
                                                         <div class="d-flex justify-content-between mb-1">
                                                             <div>
-                                                                @php
-                                                                    $statusBadge = 'secondary';
-                                                                    $status = 'Unknown';
+                                                                <span class="badge bg-{{ $progress['badge_color'] }}">{{ $progress['status_text'] }}</span>
 
-                                                                    switch ($progress->study_status) {
-                                                                        case 'in_progress':
-                                                                            $statusBadge = 'warning';
-                                                                            $status = 'In Progress';
-                                                                            break;
-                                                                        case 'studying_for_exam':
-                                                                            $statusBadge = 'info';
-                                                                            $status = 'Studying for Exam';
-                                                                            break;
-                                                                        case 'requested_voucher':
-                                                                            $statusBadge = 'primary';
-                                                                            $status = 'Voucher Requested';
-                                                                            break;
-                                                                        case 'took_exam':
-                                                                            $statusBadge = 'secondary';
-                                                                            $status = 'Took Exam';
-                                                                            break;
-                                                                        case 'passed':
-                                                                            $statusBadge = 'success';
-                                                                            $status = 'Passed Exam';
-                                                                            break;
-                                                                        case 'failed':
-                                                                            $statusBadge = 'danger';
-                                                                            $status = 'Failed Exam';
-                                                                            break;
-                                                                    }
-                                                                @endphp
-                                                                <span
-                                                                    class="badge bg-{{ $statusBadge }}">{{ $status }}</span>
-
-                                                                @if ($progress->updated_by_mentor)
+                                                                @if ($progress['updated_by_mentor'])
                                                                     <span class="badge bg-info ms-1">Mentor Updated</span>
                                                                 @endif
                                                             </div>
-                                                            <span
-                                                                class="text-muted small">{{ $progress->created_at->format('M d, Y h:i A') }}</span>
+                                                            <span class="text-muted small">{{ \Carbon\Carbon::parse($progress['created_at'])->format('M d, Y h:i A') }}</span>
                                                         </div>
 
-                                                        @if ($progress->notes)
-                                                            <p class="mb-2">{{ $progress->notes }}</p>
+                                                        @if ($progress['notes'])
+                                                            <p class="mb-2">{{ $progress['notes'] }}</p>
                                                         @endif
 
-                                                        @if ($progress->voucher_requested_at || $progress->exam_date)
+                                                        @if ($progress['voucher_requested_at'] || $progress['exam_date'])
                                                             <div class="text-muted small">
-                                                                @if ($progress->voucher_requested_at)
+                                                                @if ($progress['voucher_requested_at'])
                                                                     <div><i data-acorn-icon="tag" class="me-1"></i>
                                                                         Voucher requested on:
-                                                                        {{ $progress->voucher_requested_at->format('M d, Y') }}
+                                                                        {{ \Carbon\Carbon::parse($progress['voucher_requested_at'])->format('M d, Y') }}
                                                                     </div>
                                                                 @endif
 
-                                                                @if ($progress->exam_date)
+                                                                @if ($progress['exam_date'])
                                                                     <div><i data-acorn-icon="calendar" class="me-1"></i>
                                                                         Exam date:
-                                                                        {{ $progress->exam_date->format('M d, Y') }}</div>
+                                                                        {{ \Carbon\Carbon::parse($progress['exam_date'])->format('M d, Y') }}</div>
                                                                 @endif
                                                             </div>
                                                         @endif
@@ -560,6 +483,10 @@
                                     <label class="form-check-label" for="is_completed">
                                         Mark as completed
                                     </label>
+                                    <div class="form-text text-warning mt-1">
+                                        <i data-acorn-icon="warning-hexagon" class="me-1"></i> 
+                                        Note: Once a course is marked as completed, it cannot be changed back.
+                                    </div>
                                 </div>
                             </div>
 
@@ -581,6 +508,47 @@
                             <button type="submit" class="btn btn-primary">Update Course Progress</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Course Progress Modal (Read-only for completed courses) -->
+        <div class="modal fade" id="viewCourseProgressModal" tabindex="-1"
+            aria-labelledby="viewCourseProgressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewCourseProgressModalLabel">Course Progress Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <h6 id="view_course_title" class="mb-1"></h6>
+                        </div>
+
+                        <div class="alert alert-success mb-3">
+                            <i data-acorn-icon="check-circle" class="me-2"></i>
+                            This course has been marked as completed and cannot be modified.
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Comments</label>
+                            <div class="p-3 bg-light rounded" id="view_comment">
+                                <em class="text-muted">No comments provided</em>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" id="proof_url_container">
+                            <label class="form-label">Proof URL</label>
+                            <div class="p-3 bg-light rounded">
+                                <a href="#" id="view_proof_url" target="_blank">View Proof</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -635,7 +603,6 @@
                 padding: 15px;
                 border-radius: 5px;
                 border: 1px solid var(--bs-gray-200);
-
             }
         </style>
     @endpush
@@ -649,7 +616,7 @@
                     new bootstrap.Tooltip(tooltipTriggerEl);
                 });
 
-                // Handle course completion checkbox logic
+                // Handle course progress update button clicks
                 const updateProgressBtns = document.querySelectorAll('.update-progress-btn');
                 updateProgressBtns.forEach(function(btn) {
                     btn.addEventListener('click', function() {
@@ -661,40 +628,41 @@
 
                         document.getElementById('course_id').value = courseId;
                         document.getElementById('course_title').textContent = courseTitle;
-
-                        // Get completion checkbox
-                        const completionCheckbox = document.getElementById('is_completed');
-
-                        // If course is already completed, disable changing it back
-                        if (isCompleted) {
-                            completionCheckbox.checked = true;
-                            completionCheckbox.disabled = true;
-
-                            // Add a note about completion being permanent
-                            const checkboxContainer = completionCheckbox.closest('.form-check');
-
-                            // Only add note if it doesn't exist already
-                            if (!document.getElementById('completion-note')) {
-                                const noteElement = document.createElement('div');
-                                noteElement.id = 'completion-note';
-                                noteElement.className = 'form-text text-info mt-1';
-                                noteElement.innerHTML =
-                                    '<i data-acorn-icon="info" class="me-1"></i> Course completion is permanent and cannot be undone.';
-                                checkboxContainer.appendChild(noteElement);
-                            }
-                        } else {
-                            completionCheckbox.checked = false;
-                            completionCheckbox.disabled = false;
-
-                            // Remove note if it exists
-                            const existingNote = document.getElementById('completion-note');
-                            if (existingNote) {
-                                existingNote.remove();
-                            }
-                        }
-
+                        document.getElementById('is_completed').checked = isCompleted;
                         document.getElementById('comment').value = comment || '';
                         document.getElementById('proof_url').value = proofUrl || '';
+                    });
+                });
+                
+                // Handle view progress button clicks for completed courses
+                const viewProgressBtns = document.querySelectorAll('.view-progress-btn');
+                viewProgressBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        const courseTitle = this.getAttribute('data-course-title');
+                        const comment = this.getAttribute('data-comment');
+                        const proofUrl = this.getAttribute('data-proof-url');
+                        
+                        document.getElementById('view_course_title').textContent = courseTitle;
+                        
+                        // Set comment text or show default message
+                        const commentEl = document.getElementById('view_comment');
+                        if (comment && comment.trim() !== '') {
+                            commentEl.textContent = comment;
+                            commentEl.classList.remove('text-muted');
+                        } else {
+                            commentEl.innerHTML = '<em class="text-muted">No comments provided</em>';
+                        }
+                        
+                        // Handle proof URL
+                        const proofUrlContainer = document.getElementById('proof_url_container');
+                        const proofUrlLink = document.getElementById('view_proof_url');
+                        
+                        if (proofUrl && proofUrl.trim() !== '') {
+                            proofUrlLink.href = proofUrl;
+                            proofUrlContainer.style.display = 'block';
+                        } else {
+                            proofUrlContainer.style.display = 'none';
+                        }
                     });
                 });
                 
@@ -709,19 +677,20 @@
                     });
                 }, 5000);
                 
-                // Handle study status dropdown to disable 'requested_voucher' option if already requested
+                // Filter out requested_voucher option from study status dropdown if already requested
                 const studyStatusSelect = document.getElementById('study_status');
-                
                 if (studyStatusSelect) {
-                    // Check if a voucher has already been requested
-                    const voucherAlreadyRequested = document.querySelector('.btn-outline-primary[data-bs-target="#requestVoucherModal"]')?.disabled;
+                    // Check if voucher has been requested
+                    const voucherRequested = {{ $voucherRequestExists ? 'true' : 'false' }};
                     
-                    if (voucherAlreadyRequested) {
-                        // If already requested, remove the option from dropdown
-                        const requestedOption = Array.from(studyStatusSelect.options).find(option => option.value === 'requested_voucher');
-                        if (requestedOption) {
-                            requestedOption.disabled = true;
-                            requestedOption.text += ' (Already Requested)';
+                    if (voucherRequested) {
+                        // Find and disable the option
+                        for (let i = 0; i < studyStatusSelect.options.length; i++) {
+                            if (studyStatusSelect.options[i].value === 'requested_voucher') {
+                                studyStatusSelect.options[i].disabled = true;
+                                studyStatusSelect.options[i].text += ' (Already Requested)';
+                                break;
+                            }
                         }
                     }
                 }

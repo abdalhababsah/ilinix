@@ -61,6 +61,18 @@
         <button type="submit" class="button">Sign In</button>
     </form>
 
+    @if (Route::has('password.request'))
+        <div class="forgot-password-btn-container">
+            <a href="{{ route('password.request') }}" class="forgot-password-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="forgot-password-icon">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                </svg>
+                Forgot Password
+            </a>
+        </div>
+    @endif
+
     <div class="form-footer">
         Don't have an account? <a href="{{ route('register') }}">Create account</a>
     </div>
@@ -119,4 +131,39 @@
             });
         });
     </script>
+
+    <style>
+        .forgot-password-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .forgot-password-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            background-color: #F3F4F6;
+            color: #4B5563;
+            border: 1px solid #E5E7EB;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .forgot-password-btn:hover {
+            background-color: #E5E7EB;
+            color: #1F2937;
+        }
+        
+        .forgot-password-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
+    </style>
 </x-guest-layout>

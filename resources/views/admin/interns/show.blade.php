@@ -18,38 +18,25 @@
                     </nav>
                 </div>
                 <div class="col-12 col-md-5 d-flex align-items-center justify-content-md-end mt-3 mt-md-0 gap-2">
-
-                    <button type="button" class="btn btn-outline-danger btn-icon" data-bs-toggle="modal"
-                        data-bs-target="#deleteInternModal">
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-outline-danger btn-icon" data-bs-toggle="modal" data-bs-target="#deleteInternModal">
                         <i data-acorn-icon="bin" class="me-2"></i>Delete
                     </button>
+                    
+                    <!-- Activate/Deactivate Button -->
+                    @if($intern->status === 'active')
+                        <button type="button" class="btn btn-outline-warning btn-icon" data-bs-toggle="modal" data-bs-target="#deactivateInternModal">
+                            <i data-acorn-icon="power-off" class="me-2"></i>Deactivate
+                        </button>
+                    @else
+                        <button type="button" class="btn btn-outline-success btn-icon" data-bs-toggle="modal" data-bs-target="#activateInternModal">
+                            <i data-acorn-icon="power-on" class="me-2"></i>Activate
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <!-- Success or Error Messages -->
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i data-acorn-icon="check" class="me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i data-acorn-icon="warning-hexagon" class="me-2"></i>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+        @include('components._messages')
         <!-- Intern Overview -->
         <div class="row mb-4">
             <div class="col-lg-4 mb-4 mb-lg-0">
@@ -367,8 +354,10 @@
                                                                     <button type="button"
                                                                         class="btn btn-sm btn-outline-primary toggle-certificate-details"
                                                                         data-certificate-id="{{ $internCertificate->id }}">
-                                                                        <i data-acorn-icon="arrow-bottom" class="icon-default"></i>
-                                                                        <i data-acorn-icon="arrow-top" class="icon-expanded d-none"></i>
+                                                                        <i data-acorn-icon="arrow-bottom"
+                                                                            class="icon-default"></i>
+                                                                        <i data-acorn-icon="arrow-top"
+                                                                            class="icon-expanded d-none"></i>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -629,8 +618,8 @@
                                                                         <div
                                                                             class="card mb-2 border-{{ $update->is_completed ? 'success' : 'warning' }}">
                                                                             <div class="card-body p-3">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between" style="max-height: 20px;" >
+                                                                                <div class="d-flex justify-content-between"
+                                                                                    style="max-height: 20px;">
                                                                                     <div class="fw-medium">
                                                                                         {{ $update->course->title ?? 'Unknown Course' }}
                                                                                     </div>
@@ -732,7 +721,7 @@
                                             <thead>
                                                 <tr>
                                                     <th width="50">#</th>
-                                                    <th  width="60%">Step Name</th>
+                                                    <th width="60%">Step Name</th>
                                                     <th>Status</th>
                                                     <th>Completed At</th>
                                                 </tr>
@@ -745,7 +734,7 @@
                                                             <div class="fw-medium">
                                                                 {{ $onboardingStep->step->title ?? 'Unknown Step' }}</div>
                                                             <div class="text-muted small">
-                                                                {!! nl2br(e( $onboardingStep->step->description ?? '' )) !!}</div>
+                                                                {!! nl2br(e($onboardingStep->step->description ?? '')) !!}</div>
                                                         </td>
                                                         <td>
                                                             <span
@@ -760,7 +749,7 @@
                                                                 <span class="text-muted">-</span>
                                                             @endif
                                                         </td>
-                                                        
+
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -813,6 +802,64 @@
         </div>
     </div>
 
+    <!-- Confirmation Modals -->
+    <!-- Deactivate Intern Confirmation Modal -->
+    <div class="modal fade" id="deactivateInternModal" tabindex="-1" aria-labelledby="deactivateInternModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="deactivateInternModalLabel">
+                        <i data-acorn-icon="warning-hexagon" class="me-2"></i>Confirm Deactivation
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to deactivate <strong>{{ $intern->first_name }}
+                            {{ $intern->last_name }}</strong>?</p>
+                    <p>Their account will be temporarily disabled and they will not be able to access the system.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ route('admin.intern.deactivate', $intern->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-warning">Deactivate</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activate Intern Confirmation Modal -->
+    <div class="modal fade" id="activateInternModal" tabindex="-1" aria-labelledby="activateInternModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="activateInternModalLabel">
+                        <i data-acorn-icon="check-circle" class="me-2"></i>Confirm Activation
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to activate <strong>{{ $intern->first_name }}
+                            {{ $intern->last_name }}</strong>?</p>
+                    <p>Their account will be enabled and they will be able to access the system again.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ route('admin.intern.activate', $intern->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-success">Activate</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteInternModal" tabindex="-1" aria-labelledby="deleteInternModalLabel"
         aria-hidden="true">
@@ -845,502 +892,568 @@
 
     <!-- Additional Modals -->
     <!-- Certificate Details Modal -->
-<!-- Certificate Details Modal -->
-@foreach ($intern->certificates as $internCertificate)
-    <div class="modal fade" id="certificateModal{{ $internCertificate->id }}" tabindex="-1"
-        aria-labelledby="certificateModalLabel{{ $internCertificate->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="certificateModalLabel{{ $internCertificate->id }}">
-                        Certificate Details
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <!-- Certificate Header -->
-                    <div class="bg-light p-3 border-bottom">
-                        <div class="d-flex align-items-center">
-                            @if($internCertificate->certificate && $internCertificate->certificate->provider)
-                                <div class="me-3">
-                                    @if($internCertificate->certificate->provider->logo)
-                                        <img src="{{ asset('storage/' . $internCertificate->certificate->provider->logo) }}"
-                                            alt="Provider" class="rounded" width="60">
-                                    @else
-                                        <div class="bg-light text-muted rounded d-flex align-items-center justify-content-center"
-                                            style="width: 60px; height: 60px;">
-                                            <i data-acorn-icon="certificate"></i>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                            <div>
-                                <h5 class="mb-1">{{ $internCertificate->certificate->title ?? 'Unknown Certificate' }}</h5>
-                                <div class="text-muted">
-                                    {{ $internCertificate->certificate->provider->name ?? 'Unknown Provider' }}
-                                    @if($internCertificate->certificate->level)
-                                        <span class="badge bg-info ms-2">{{ ucfirst($internCertificate->certificate->level) }}</span>
-                                    @endif
+    <!-- Certificate Details Modal -->
+    @foreach ($intern->certificates as $internCertificate)
+        <div class="modal fade" id="certificateModal{{ $internCertificate->id }}" tabindex="-1"
+            aria-labelledby="certificateModalLabel{{ $internCertificate->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="certificateModalLabel{{ $internCertificate->id }}">
+                            Certificate Details
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <!-- Certificate Header -->
+                        <div class="bg-light p-3 border-bottom">
+                            <div class="d-flex align-items-center">
+                                @if ($internCertificate->certificate && $internCertificate->certificate->provider)
+                                    <div class="me-3">
+                                        @if ($internCertificate->certificate->provider->logo)
+                                            <img src="{{ asset('storage/' . $internCertificate->certificate->provider->logo) }}"
+                                                alt="Provider" class="rounded" width="60">
+                                        @else
+                                            <div class="bg-light text-muted rounded d-flex align-items-center justify-content-center"
+                                                style="width: 60px; height: 60px;">
+                                                <i data-acorn-icon="certificate"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                                <div>
+                                    <h5 class="mb-1">
+                                        {{ $internCertificate->certificate->title ?? 'Unknown Certificate' }}</h5>
+                                    <div class="text-muted">
+                                        {{ $internCertificate->certificate->provider->name ?? 'Unknown Provider' }}
+                                        @if ($internCertificate->certificate->level)
+                                            <span
+                                                class="badge bg-info ms-2">{{ ucfirst($internCertificate->certificate->level) }}</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Tab Navigation -->
-                    <ul class="nav nav-tabs nav-fill" id="certificateDetailTabs{{ $internCertificate->id }}" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="overview-tab{{ $internCertificate->id }}" 
-                                data-bs-toggle="tab" data-bs-target="#overview{{ $internCertificate->id }}" 
-                                type="button" role="tab" aria-selected="true">
-                                Overview
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="certificate-progress-tab{{ $internCertificate->id }}" 
-                                data-bs-toggle="tab" data-bs-target="#certificate-progress{{ $internCertificate->id }}" 
-                                type="button" role="tab" aria-selected="false">
-                                Certificate Progress
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="course-progress-tab{{ $internCertificate->id }}" 
-                                data-bs-toggle="tab" data-bs-target="#course-progress{{ $internCertificate->id }}" 
-                                type="button" role="tab" aria-selected="false">
-                                Course Progress
-                            </button>
-                        </li>
-                    </ul>
+                        <!-- Tab Navigation -->
+                        <ul class="nav nav-tabs nav-fill" id="certificateDetailTabs{{ $internCertificate->id }}"
+                            role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="overview-tab{{ $internCertificate->id }}"
+                                    data-bs-toggle="tab" data-bs-target="#overview{{ $internCertificate->id }}"
+                                    type="button" role="tab" aria-selected="true">
+                                    Overview
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="certificate-progress-tab{{ $internCertificate->id }}"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#certificate-progress{{ $internCertificate->id }}" type="button"
+                                    role="tab" aria-selected="false">
+                                    Certificate Progress
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="course-progress-tab{{ $internCertificate->id }}"
+                                    data-bs-toggle="tab" data-bs-target="#course-progress{{ $internCertificate->id }}"
+                                    type="button" role="tab" aria-selected="false">
+                                    Course Progress
+                                </button>
+                            </li>
+                        </ul>
 
-                    <!-- Tab Content -->
-                    <div class="tab-content p-3" id="certificateDetailTabsContent{{ $internCertificate->id }}">
-                        <!-- Overview Tab -->
-                        <div class="tab-pane fade show active" id="overview{{ $internCertificate->id }}" role="tabpanel">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="card h-100">
-                                        <div class="card-header py-2 bg-light">
-                                            <h6 class="mb-0">Certificate Information</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="mb-2">
-                                                <div class="text-muted small">Started Date</div>
-                                                <div class="fw-medium">
-                                                    @if($internCertificate->started_at)
-                                                        {{ \Carbon\Carbon::parse($internCertificate->started_at)->format('F d, Y') }}
-                                                    @else
-                                                        <span class="text-muted">Not started</span>
-                                                    @endif
-                                                </div>
+                        <!-- Tab Content -->
+                        <div class="tab-content p-3" id="certificateDetailTabsContent{{ $internCertificate->id }}">
+                            <!-- Overview Tab -->
+                            <div class="tab-pane fade show active" id="overview{{ $internCertificate->id }}"
+                                role="tabpanel">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-header py-2 bg-light">
+                                                <h6 class="mb-0">Certificate Information</h6>
                                             </div>
-                                            <div class="mb-2">
-                                                <div class="text-muted small">Completed Date</div>
-                                                <div class="fw-medium">
-                                                    @if($internCertificate->completed_at)
-                                                        {{ \Carbon\Carbon::parse($internCertificate->completed_at)->format('F d, Y') }}
-                                                    @else
-                                                        <span class="text-muted">In progress</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="mb-2">
-                                                <div class="text-muted small">Duration</div>
-                                                <div class="fw-medium">
-                                                    @if($internCertificate->started_at)
-                                                        @if($internCertificate->completed_at)
-                                                            {{ \Carbon\Carbon::parse($internCertificate->started_at)->diffForHumans(\Carbon\Carbon::parse($internCertificate->completed_at), true) }}
+                                            <div class="card-body">
+                                                <div class="mb-2">
+                                                    <div class="text-muted small">Started Date</div>
+                                                    <div class="fw-medium">
+                                                        @if ($internCertificate->started_at)
+                                                            {{ \Carbon\Carbon::parse($internCertificate->started_at)->format('F d, Y') }}
                                                         @else
-                                                            {{ \Carbon\Carbon::parse($internCertificate->started_at)->diffForHumans(null, true) }}
-                                                            (ongoing)
+                                                            <span class="text-muted">Not started</span>
                                                         @endif
-                                                    @else
-                                                        <span class="text-muted">Not started</span>
-                                                    @endif
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <div class="text-muted small">Completed Date</div>
+                                                    <div class="fw-medium">
+                                                        @if ($internCertificate->completed_at)
+                                                            {{ \Carbon\Carbon::parse($internCertificate->completed_at)->format('F d, Y') }}
+                                                        @else
+                                                            <span class="text-muted">In progress</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <div class="text-muted small">Duration</div>
+                                                    <div class="fw-medium">
+                                                        @if ($internCertificate->started_at)
+                                                            @if ($internCertificate->completed_at)
+                                                                {{ \Carbon\Carbon::parse($internCertificate->started_at)->diffForHumans(\Carbon\Carbon::parse($internCertificate->completed_at), true) }}
+                                                            @else
+                                                                {{ \Carbon\Carbon::parse($internCertificate->started_at)->diffForHumans(null, true) }}
+                                                                (ongoing)
+                                                            @endif
+                                                        @else
+                                                            <span class="text-muted">Not started</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card h-100">
-                                        <div class="card-header py-2 bg-light">
-                                            <h6 class="mb-0">Exam Information</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="mb-2">
-                                                <div class="text-muted small">Exam Status</div>
-                                                <div class="fw-medium">
-                                                    @php
-                                                        $statusBadge = 'secondary';
-                                                        switch($internCertificate->exam_status) {
-                                                            case 'scheduled':
-                                                                $statusBadge = 'info';
-                                                                break;
-                                                            case 'passed':
-                                                                $statusBadge = 'success';
-                                                                break;
-                                                            case 'failed':
-                                                                $statusBadge = 'danger';
-                                                                break;
-                                                            default:
-                                                                $statusBadge = 'secondary';
-                                                        }
-                                                    @endphp
-                                                    <span class="badge bg-{{ $statusBadge }} fs-6">
-                                                        {{ ucfirst(str_replace('_', ' ', $internCertificate->exam_status ?? 'not_taken')) }}
-                                                    </span>
-                                                </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-header py-2 bg-light">
+                                                <h6 class="mb-0">Exam Information</h6>
                                             </div>
-                                            <div class="mb-2">
-                                                <div class="text-muted small">Voucher ID</div>
-                                                <div class="fw-medium">
-                                                    @if($internCertificate->voucher_id)
-                                                        <code>{{ $internCertificate->voucher_id }}</code>
-                                                    @else
-                                                        <span class="text-muted">Not assigned</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="mb-2">
-                                                <div class="text-muted small">Study Status</div>
-                                                <div class="fw-medium">
-                                                    @php
-                                                        $latestProgress = $internCertificate->progress->sortByDesc('created_at')->first();
-                                                        $studyStatusBadge = 'secondary';
-                                                        $studyStatus = 'Not started';
-                                                        
-                                                        if ($latestProgress) {
-                                                            switch($latestProgress->study_status) {
-                                                                case 'in_progress':
-                                                                    $studyStatusBadge = 'warning';
-                                                                    $studyStatus = 'In Progress';
-                                                                    break;
-                                                                case 'studying_for_exam':
-                                                                    $studyStatusBadge = 'info';
-                                                                    $studyStatus = 'Studying for Exam';
-                                                                    break;
-                                                                case 'requested_voucher':
-                                                                    $studyStatusBadge = 'primary';
-                                                                    $studyStatus = 'Voucher Requested';
-                                                                    break;
-                                                                case 'took_exam':
-                                                                    $studyStatusBadge = 'info';
-                                                                    $studyStatus = 'Took Exam';
+                                            <div class="card-body">
+                                                <div class="mb-2">
+                                                    <div class="text-muted small">Exam Status</div>
+                                                    <div class="fw-medium">
+                                                        @php
+                                                            $statusBadge = 'secondary';
+                                                            switch ($internCertificate->exam_status) {
+                                                                case 'scheduled':
+                                                                    $statusBadge = 'info';
                                                                     break;
                                                                 case 'passed':
-                                                                    $studyStatusBadge = 'success';
-                                                                    $studyStatus = 'Passed';
+                                                                    $statusBadge = 'success';
                                                                     break;
                                                                 case 'failed':
-                                                                    $studyStatusBadge = 'danger';
-                                                                    $studyStatus = 'Failed';
+                                                                    $statusBadge = 'danger';
                                                                     break;
                                                                 default:
-                                                                    $studyStatusBadge = 'secondary';
-                                                                    $studyStatus = 'Not Started';
+                                                                    $statusBadge = 'secondary';
                                                             }
-                                                        }
-                                                    @endphp
-                                                    <span class="badge bg-{{ $studyStatusBadge }} fs-6">
-                                                        {{ $studyStatus }}
-                                                    </span>
+                                                        @endphp
+                                                        <span class="badge bg-{{ $statusBadge }} fs-6">
+                                                            {{ ucfirst(str_replace('_', ' ', $internCertificate->exam_status ?? 'not_taken')) }}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            @if($internCertificate->certificate && $internCertificate->certificate->description)
-                                <div class="mb-3">
-                                    <h6 class="fw-medium mb-2">Certificate Description</h6>
-                                    <div class="p-3 bg-light rounded">
-                                        {!! nl2br(e($internCertificate->certificate->description)) !!}
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        
-                        <!-- Certificate Progress Tab -->
-                        <div class="tab-pane fade" id="certificate-progress{{ $internCertificate->id }}" role="tabpanel">
-                            @if($internCertificate->progress->count() > 0)
-                                <h6 class="fw-medium mb-3">Certificate Progress History</h6>
-                                <div class="timeline">
-                                    @foreach($internCertificate->progress->sortByDesc('created_at') as $certProgress)
-                                        <div class="timeline-item">
-                                            <div class="timeline-icon bg-primary">
-                                                <i data-acorn-icon="note" class="text-white"></i>
-                                            </div>
-                                            <div class="timeline-content">
-                                                <div class="time text-muted small">{{ \Carbon\Carbon::parse($certProgress->created_at)->format('M d, Y h:i A') }}</div>
                                                 <div class="mb-2">
-                                                    <span class="badge bg-{{ 
-                                                        $certProgress->study_status == 'passed' ? 'success' : 
-                                                        ($certProgress->study_status == 'failed' ? 'danger' : 
-                                                        ($certProgress->study_status == 'studying_for_exam' ? 'info' : 
-                                                        ($certProgress->study_status == 'requested_voucher' ? 'primary' : 
-                                                        ($certProgress->study_status == 'took_exam' ? 'info' : 'warning')))) 
-                                                    }}">
-                                                        {{ ucfirst(str_replace('_', ' ', $certProgress->study_status ?? 'Not Started')) }}
-                                                    </span>
-                                                    
-                                                    @if($certProgress->voucher_requested_at)
-                                                        <span class="badge bg-info ms-2">Voucher Requested</span>
-                                                    @endif
-                                                    
-                                                    @if($certProgress->exam_date)
-                                                        <span class="badge bg-primary ms-2">Exam Scheduled</span>
-                                                    @endif
-                                                </div>
-                                                
-                                                @if($certProgress->notes)
-                                                    <p class="mb-2">{{ $certProgress->notes }}</p>
-                                                @endif
-                                                
-                                                @if($certProgress->updated_by_mentor)
-                                                    <div class="mt-2">
-                                                        <span class="badge bg-info">Updated by Mentor</span>
+                                                    <div class="text-muted small">Voucher ID</div>
+                                                    <div class="fw-medium">
+                                                        @if ($internCertificate->voucher_id)
+                                                            <code>{{ $internCertificate->voucher_id }}</code>
+                                                        @else
+                                                            <span class="text-muted">Not assigned</span>
+                                                        @endif
                                                     </div>
-                                                @endif
-                                                
-                                                <div class="mt-2 d-flex flex-wrap gap-2">
-                                                    @if($certProgress->exam_date)
-                                                        <div class="small text-muted">
-                                                            <i data-acorn-icon="calendar" class="me-1"></i>
-                                                            Exam: {{ \Carbon\Carbon::parse($certProgress->exam_date)->format('M d, Y') }}
-                                                        </div>
-                                                    @endif
-                                                    
-                                                    @if($certProgress->voucher_requested_at)
-                                                        <div class="small text-muted">
-                                                            <i data-acorn-icon="ticket" class="me-1"></i>
-                                                            Voucher: {{ \Carbon\Carbon::parse($certProgress->voucher_requested_at)->format('M d, Y') }}
-                                                        </div>
-                                                    @endif
+                                                </div>
+                                                <div class="mb-2">
+                                                    <div class="text-muted small">Study Status</div>
+                                                    <div class="fw-medium">
+                                                        @php
+                                                            $latestProgress = $internCertificate->progress
+                                                                ->sortByDesc('created_at')
+                                                                ->first();
+                                                            $studyStatusBadge = 'secondary';
+                                                            $studyStatus = 'Not started';
+
+                                                            if ($latestProgress) {
+                                                                switch ($latestProgress->study_status) {
+                                                                    case 'in_progress':
+                                                                        $studyStatusBadge = 'warning';
+                                                                        $studyStatus = 'In Progress';
+                                                                        break;
+                                                                    case 'studying_for_exam':
+                                                                        $studyStatusBadge = 'info';
+                                                                        $studyStatus = 'Studying for Exam';
+                                                                        break;
+                                                                    case 'requested_voucher':
+                                                                        $studyStatusBadge = 'primary';
+                                                                        $studyStatus = 'Voucher Requested';
+                                                                        break;
+                                                                    case 'took_exam':
+                                                                        $studyStatusBadge = 'info';
+                                                                        $studyStatus = 'Took Exam';
+                                                                        break;
+                                                                    case 'passed':
+                                                                        $studyStatusBadge = 'success';
+                                                                        $studyStatus = 'Passed';
+                                                                        break;
+                                                                    case 'failed':
+                                                                        $studyStatusBadge = 'danger';
+                                                                        $studyStatus = 'Failed';
+                                                                        break;
+                                                                    default:
+                                                                        $studyStatusBadge = 'secondary';
+                                                                        $studyStatus = 'Not Started';
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        <span class="badge bg-{{ $studyStatusBadge }} fs-6">
+                                                            {{ $studyStatus }}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
-                            @else
-                                <div class="text-center py-5">
+
+                                @if ($internCertificate->certificate && $internCertificate->certificate->description)
                                     <div class="mb-3">
-                                        <i data-acorn-icon="chart" style="font-size: 3rem;" class="text-muted"></i>
+                                        <h6 class="fw-medium mb-2">Certificate Description</h6>
+                                        <div class="p-3 bg-light rounded">
+                                            {!! nl2br(e($internCertificate->certificate->description)) !!}
+                                        </div>
                                     </div>
-                                    <h6 class="text-muted">No certificate progress updates recorded yet</h6>
-                                </div>
-                            @endif
-                        </div>
-                        
-                        <!-- Course Progress Tab -->
-                        <div class="tab-pane fade" id="course-progress{{ $internCertificate->id }}" role="tabpanel">
-                            @php
-                                // Get progress updates for this specific certificate
-                                $courseProgressUpdates = $intern->progressUpdates->where('certificate_id', $internCertificate->certificate_id);
-                                
-                                // Get all courses for this certificate
-                                $certificateCourses = $internCertificate->certificate->courses ?? collect();
-                                
-                                // Group progress by course
-                                $courseProgressMap = collect();
-                                foreach($certificateCourses as $course) {
-                                    $courseProgress = $courseProgressUpdates->where('course_id', $course->id)->sortByDesc('created_at')->first();
-                                    $courseProgressMap->put($course->id, [
-                                        'course' => $course,
-                                        'progress' => $courseProgress,
-                                        'all_updates' => $courseProgressUpdates->where('course_id', $course->id)->sortByDesc('created_at')
-                                    ]);
-                                }
-                            @endphp
-                            
-                            @if($certificateCourses->count() > 0)
-                                <div class="mb-3">
-                                    <h6 class="fw-medium mb-3">Course Progress Summary</h6>
-                                    <div class="progress" style="height: 24px;">
-                                        @php
-                                            $completedCourses = $courseProgressMap->filter(function($item) {
-                                                return $item['progress'] && $item['progress']->is_completed;
-                                            })->count();
-                                            
-                                            $inProgressCourses = $courseProgressMap->filter(function($item) {
-                                                return $item['progress'] && !$item['progress']->is_completed;
-                                            })->count();
-                                            
-                                            $notStartedCourses = $certificateCourses->count() - $completedCourses - $inProgressCourses;
-                                            
-                                            $completedPercent = $certificateCourses->count() > 0 ? 
-                                                round(($completedCourses / $certificateCourses->count()) * 100) : 0;
-                                            
-                                            $inProgressPercent = $certificateCourses->count() > 0 ? 
-                                                round(($inProgressCourses / $certificateCourses->count()) * 100) : 0;
-                                            
-                                            $notStartedPercent = 100 - $completedPercent - $inProgressPercent;
-                                        @endphp
-                                        
-                                        @if($completedPercent > 0)
-                                            <div class="progress-bar bg-success" role="progressbar" 
-                                                style="width: {{ $completedPercent }}%" 
-                                                aria-valuenow="{{ $completedPercent }}" 
-                                                aria-valuemin="0" aria-valuemax="100">
-                                                {{ $completedCourses }} Completed
-                                            </div>
-                                        @endif
-                                        
-                                        @if($inProgressPercent > 0)
-                                            <div class="progress-bar bg-warning" role="progressbar" 
-                                                style="width: {{ $inProgressPercent }}%" 
-                                                aria-valuenow="{{ $inProgressPercent }}" 
-                                                aria-valuemin="0" aria-valuemax="100">
-                                                {{ $inProgressCourses }} In Progress
-                                            </div>
-                                        @endif
-                                        
-                                        @if($notStartedPercent > 0)
-                                            <div class="progress-bar bg-secondary" role="progressbar" 
-                                                style="width: {{ $notStartedPercent }}%" 
-                                                aria-valuenow="{{ $notStartedPercent }}" 
-                                                aria-valuemin="0" aria-valuemax="100">
-                                                {{ $notStartedCourses }} Not Started
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                
-                                <div class="accordion" id="coursesAccordion{{ $internCertificate->id }}">
-                                    @foreach($certificateCourses->sortBy('step_order') as $course)
-                                        @php
-                                            $courseData = $courseProgressMap->get($course->id);
-                                            $courseProgress = $courseData ? $courseData['progress'] : null;
-                                            $allUpdates = $courseData ? $courseData['all_updates'] : collect();
-                                            
-                                            $statusClass = !$courseProgress ? 'secondary' : 
-                                                          ($courseProgress->is_completed ? 'success' : 'warning');
-                                            
-                                            $statusText = !$courseProgress ? 'Not Started' : 
-                                                         ($courseProgress->is_completed ? 'Completed' : 'In Progress');
-                                        @endphp
-                                        
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="courseHeading{{ $course->id }}">
-                                                <button class="accordion-button collapsed" type="button" 
-                                                    data-bs-toggle="collapse" 
-                                                    data-bs-target="#courseCollapse{{ $course->id }}" 
-                                                    aria-expanded="false" 
-                                                    aria-controls="courseCollapse{{ $course->id }}">
-                                                    <div class="d-flex justify-content-between align-items-center w-100 me-3">
-                                                        <div>
-                                                            <span class="badge bg-secondary me-2">{{ $course->step_order }}</span>
-                                                            {{ $course->title }}
-                                                        </div>
-                                                        <span class="badge bg-{{ $statusClass }}">{{ $statusText }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Certificate Progress Tab -->
+                            <div class="tab-pane fade" id="certificate-progress{{ $internCertificate->id }}"
+                                role="tabpanel">
+                                @if ($internCertificate->progress->count() > 0)
+                                    <h6 class="fw-medium mb-3">Certificate Progress History</h6>
+                                    <div class="timeline">
+                                        @foreach ($internCertificate->progress->sortByDesc('created_at') as $certProgress)
+                                            <div class="timeline-item">
+                                                <div class="timeline-icon bg-primary">
+                                                    <i data-acorn-icon="note" class="text-white"></i>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <div class="time text-muted small">
+                                                        {{ \Carbon\Carbon::parse($certProgress->created_at)->format('M d, Y h:i A') }}
                                                     </div>
-                                                </button>
-                                            </h2>
-                                            <div id="courseCollapse{{ $course->id }}" 
-                                                class="accordion-collapse collapse" 
-                                                aria-labelledby="courseHeading{{ $course->id }}" 
-                                                data-bs-parent="#coursesAccordion{{ $internCertificate->id }}">
-                                                <div class="accordion-body">
-                                                    <div class="mb-3">
-                                                        <div class="d-flex justify-content-between">
+                                                    <div class="mb-2">
+                                                        <span
+                                                            class="badge bg-{{ $certProgress->study_status == 'passed'
+                                                                ? 'success'
+                                                                : ($certProgress->study_status == 'failed'
+                                                                    ? 'danger'
+                                                                    : ($certProgress->study_status == 'studying_for_exam'
+                                                                        ? 'info'
+                                                                        : ($certProgress->study_status == 'requested_voucher'
+                                                                            ? 'primary'
+                                                                            : ($certProgress->study_status == 'took_exam'
+                                                                                ? 'info'
+                                                                                : 'warning')))) }}">
+                                                            {{ ucfirst(str_replace('_', ' ', $certProgress->study_status ?? 'Not Started')) }}
+                                                        </span>
+
+                                                        @if ($certProgress->voucher_requested_at)
+                                                            <span class="badge bg-info ms-2">Voucher Requested</span>
+                                                        @endif
+
+                                                        @if ($certProgress->exam_date)
+                                                            <span class="badge bg-primary ms-2">Exam Scheduled</span>
+                                                        @endif
+                                                    </div>
+
+                                                    @if ($certProgress->notes)
+                                                        <p class="mb-2">{{ $certProgress->notes }}</p>
+                                                    @endif
+
+                                                    @if ($certProgress->updated_by_mentor)
+                                                        <div class="mt-2">
+                                                            <span class="badge bg-info">Updated by Mentor</span>
+                                                        </div>
+                                                    @endif
+
+                                                    <div class="mt-2 d-flex flex-wrap gap-2">
+                                                        @if ($certProgress->exam_date)
+                                                            <div class="small text-muted">
+                                                                <i data-acorn-icon="calendar" class="me-1"></i>
+                                                                Exam:
+                                                                {{ \Carbon\Carbon::parse($certProgress->exam_date)->format('M d, Y') }}
+                                                            </div>
+                                                        @endif
+
+                                                        @if ($certProgress->voucher_requested_at)
+                                                            <div class="small text-muted">
+                                                                <i data-acorn-icon="ticket" class="me-1"></i>
+                                                                Voucher:
+                                                                {{ \Carbon\Carbon::parse($certProgress->voucher_requested_at)->format('M d, Y') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="text-center py-5">
+                                        <div class="mb-3">
+                                            <i data-acorn-icon="chart" style="font-size: 3rem;" class="text-muted"></i>
+                                        </div>
+                                        <h6 class="text-muted">No certificate progress updates recorded yet</h6>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Course Progress Tab -->
+                            <div class="tab-pane fade" id="course-progress{{ $internCertificate->id }}"
+                                role="tabpanel">
+                                @php
+                                    // Get progress updates for this specific certificate
+                                    $courseProgressUpdates = $intern->progressUpdates->where(
+                                        'certificate_id',
+                                        $internCertificate->certificate_id,
+                                    );
+
+                                    // Get all courses for this certificate
+                                    $certificateCourses = $internCertificate->certificate->courses ?? collect();
+
+                                    // Group progress by course
+                                    $courseProgressMap = collect();
+                                    foreach ($certificateCourses as $course) {
+                                        $courseProgress = $courseProgressUpdates
+                                            ->where('course_id', $course->id)
+                                            ->sortByDesc('created_at')
+                                            ->first();
+                                        $courseProgressMap->put($course->id, [
+                                            'course' => $course,
+                                            'progress' => $courseProgress,
+                                            'all_updates' => $courseProgressUpdates
+                                                ->where('course_id', $course->id)
+                                                ->sortByDesc('created_at'),
+                                        ]);
+                                    }
+                                @endphp
+
+                                @if ($certificateCourses->count() > 0)
+                                    <div class="mb-3">
+                                        <h6 class="fw-medium mb-3">Course Progress Summary</h6>
+                                        <div class="progress" style="height: 24px;">
+                                            @php
+                                                $completedCourses = $courseProgressMap
+                                                    ->filter(function ($item) {
+                                                        return $item['progress'] && $item['progress']->is_completed;
+                                                    })
+                                                    ->count();
+
+                                                $inProgressCourses = $courseProgressMap
+                                                    ->filter(function ($item) {
+                                                        return $item['progress'] && !$item['progress']->is_completed;
+                                                    })
+                                                    ->count();
+
+                                                $notStartedCourses =
+                                                    $certificateCourses->count() -
+                                                    $completedCourses -
+                                                    $inProgressCourses;
+
+                                                $completedPercent =
+                                                    $certificateCourses->count() > 0
+                                                        ? round(
+                                                            ($completedCourses / $certificateCourses->count()) * 100,
+                                                        )
+                                                        : 0;
+
+                                                $inProgressPercent =
+                                                    $certificateCourses->count() > 0
+                                                        ? round(
+                                                            ($inProgressCourses / $certificateCourses->count()) * 100,
+                                                        )
+                                                        : 0;
+
+                                                $notStartedPercent = 100 - $completedPercent - $inProgressPercent;
+                                            @endphp
+
+                                            @if ($completedPercent > 0)
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    style="width: {{ $completedPercent }}%"
+                                                    aria-valuenow="{{ $completedPercent }}" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    {{ $completedCourses }} Completed
+                                                </div>
+                                            @endif
+
+                                            @if ($inProgressPercent > 0)
+                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                    style="width: {{ $inProgressPercent }}%"
+                                                    aria-valuenow="{{ $inProgressPercent }}" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    {{ $inProgressCourses }} In Progress
+                                                </div>
+                                            @endif
+
+                                            @if ($notStartedPercent > 0)
+                                                <div class="progress-bar bg-secondary" role="progressbar"
+                                                    style="width: {{ $notStartedPercent }}%"
+                                                    aria-valuenow="{{ $notStartedPercent }}" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    {{ $notStartedCourses }} Not Started
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion" id="coursesAccordion{{ $internCertificate->id }}">
+                                        @foreach ($certificateCourses->sortBy('step_order') as $course)
+                                            @php
+                                                $courseData = $courseProgressMap->get($course->id);
+                                                $courseProgress = $courseData ? $courseData['progress'] : null;
+                                                $allUpdates = $courseData ? $courseData['all_updates'] : collect();
+
+                                                $statusClass = !$courseProgress
+                                                    ? 'secondary'
+                                                    : ($courseProgress->is_completed
+                                                        ? 'success'
+                                                        : 'warning');
+
+                                                $statusText = !$courseProgress
+                                                    ? 'Not Started'
+                                                    : ($courseProgress->is_completed
+                                                        ? 'Completed'
+                                                        : 'In Progress');
+                                            @endphp
+
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="courseHeading{{ $course->id }}">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#courseCollapse{{ $course->id }}"
+                                                        aria-expanded="false"
+                                                        aria-controls="courseCollapse{{ $course->id }}">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center w-100 me-3">
                                                             <div>
-                                                                <div class="text-muted small">Estimated Duration</div>
-                                                                <div>{{ $course->estimated_minutes }} minutes</div>
+                                                                <span
+                                                                    class="badge bg-secondary me-2">{{ $course->step_order }}</span>
+                                                                {{ $course->title }}
                                                             </div>
-                                                            @if($course->resource_link)
-                                                                <div>
-                                                                    <a href="{{ $course->resource_link }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                                                        <i data-acorn-icon="book" class="me-1"></i> View Resource
-                                                                    </a>
-                                                                </div>
-                                                            @endif
+                                                            <span
+                                                                class="badge bg-{{ $statusClass }}">{{ $statusText }}</span>
                                                         </div>
-                                                    </div>
-                                                    
-                                                    @if($course->description)
+                                                    </button>
+                                                </h2>
+                                                <div id="courseCollapse{{ $course->id }}"
+                                                    class="accordion-collapse collapse"
+                                                    aria-labelledby="courseHeading{{ $course->id }}"
+                                                    data-bs-parent="#coursesAccordion{{ $internCertificate->id }}">
+                                                    <div class="accordion-body">
                                                         <div class="mb-3">
-                                                            <div class="text-muted small mb-1">Description</div>
-                                                            <p>  {!! nl2br(e($course->description )) !!}</p>
-                                                        </div>
-                                                    @endif
-                                                    
-                                                    @if($allUpdates->count() > 0)
-                                                        <div class="mt-4">
-                                                            <h6 class="fw-medium mb-2">Progress Updates</h6>
-                                                            <div class="timeline-mini">
-                                                                @foreach($allUpdates as $update)
-                                                                    <div class="timeline-mini-item">
-                                                                        <div class="timeline-mini-icon {{ $update->is_completed ? 'bg-success' : 'bg-warning' }}">
-                                                                            <i data-acorn-icon="{{ $update->is_completed ? 'check' : 'clock' }}" class="text-white"></i>
-                                                                        </div>
-                                                                        <div class="timeline-mini-content">
-                                                                            <div class="d-flex justify-content-between">
-                                                                                <div class="time text-muted small">
-                                                                                    {{ \Carbon\Carbon::parse($update->created_at)->format('M d, Y') }}
-                                                                                </div>
-                                                                                <span class="badge bg-{{ $update->is_completed ? 'success' : 'warning' }}">
-                                                                                    {{ $update->is_completed ? 'Completed' : 'In Progress' }}
-                                                                                </span>
-                                                                            </div>
-                                                                            @if($update->comment)
-                                                                                <p class="my-2">{{ $update->comment }}</p>
-                                                                            @endif
-                                                                            <div class="d-flex flex-wrap gap-2 mt-2">
-                                                                                @if($update->proof_url)
-                                                                                    <a href="{{ $update->proof_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                                                                        <i data-acorn-icon="link" class="me-1"></i> View Proof
-                                                                                    </a>
-                                                                                @endif
-                                                                                
-                                                                                @if($update->completed_at)
-                                                                                    <span class="badge bg-light text-dark">
-                                                                                        Completed: {{ \Carbon\Carbon::parse($update->completed_at)->format('M d, Y') }}
-                                                                                    </span>
-                                                                                @endif
-                                                                                
-                                                                                @if($update->updated_by_mentor)
-                                                                                    <span class="badge bg-info">Mentor Updated</span>
-                                                                                @endif
-                                                                            </div>
-                                                                        </div>
+                                                            <div class="d-flex justify-content-between">
+                                                                <div>
+                                                                    <div class="text-muted small">Estimated Duration</div>
+                                                                    <div>{{ $course->estimated_minutes }} minutes</div>
+                                                                </div>
+                                                                @if ($course->resource_link)
+                                                                    <div>
+                                                                        <a href="{{ $course->resource_link }}"
+                                                                            target="_blank"
+                                                                            class="btn btn-sm btn-outline-primary">
+                                                                            <i data-acorn-icon="book" class="me-1"></i>
+                                                                            View Resource
+                                                                        </a>
                                                                     </div>
-                                                                @endforeach
+                                                                @endif
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="alert alert-light border text-center my-3">
-                                                            <i data-acorn-icon="notebook-empty" class="me-1"></i>
-                                                            No progress updates for this course yet
-                                                        </div>
-                                                    @endif
+
+                                                        @if ($course->description)
+                                                            <div class="mb-3">
+                                                                <div class="text-muted small mb-1">Description</div>
+                                                                <p> {!! nl2br(e($course->description)) !!}</p>
+                                                            </div>
+                                                        @endif
+
+                                                        @if ($allUpdates->count() > 0)
+                                                            <div class="mt-4">
+                                                                <h6 class="fw-medium mb-2">Progress Updates</h6>
+                                                                <div class="timeline-mini">
+                                                                    @foreach ($allUpdates as $update)
+                                                                        <div class="timeline-mini-item">
+                                                                            <div
+                                                                                class="timeline-mini-icon {{ $update->is_completed ? 'bg-success' : 'bg-warning' }}">
+                                                                                <i data-acorn-icon="{{ $update->is_completed ? 'check' : 'clock' }}"
+                                                                                    class="text-white"></i>
+                                                                            </div>
+                                                                            <div class="timeline-mini-content">
+                                                                                <div
+                                                                                    class="d-flex justify-content-between">
+                                                                                    <div class="time text-muted small">
+                                                                                        {{ \Carbon\Carbon::parse($update->created_at)->format('M d, Y') }}
+                                                                                    </div>
+                                                                                    <span
+                                                                                        class="badge bg-{{ $update->is_completed ? 'success' : 'warning' }}">
+                                                                                        {{ $update->is_completed ? 'Completed' : 'In Progress' }}
+                                                                                    </span>
+                                                                                </div>
+                                                                                @if ($update->comment)
+                                                                                    <p class="my-2">
+                                                                                        {{ $update->comment }}</p>
+                                                                                @endif
+                                                                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                                                                    @if ($update->proof_url)
+                                                                                        <a href="{{ $update->proof_url }}"
+                                                                                            target="_blank"
+                                                                                            class="btn btn-sm btn-outline-primary">
+                                                                                            <i data-acorn-icon="link"
+                                                                                                class="me-1"></i> View
+                                                                                            Proof
+                                                                                        </a>
+                                                                                    @endif
+
+                                                                                    @if ($update->completed_at)
+                                                                                        <span
+                                                                                            class="badge bg-light text-dark">
+                                                                                            Completed:
+                                                                                            {{ \Carbon\Carbon::parse($update->completed_at)->format('M d, Y') }}
+                                                                                        </span>
+                                                                                    @endif
+
+                                                                                    @if ($update->updated_by_mentor)
+                                                                                        <span class="badge bg-info">Mentor
+                                                                                            Updated</span>
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="alert alert-light border text-center my-3">
+                                                                <i data-acorn-icon="notebook-empty" class="me-1"></i>
+                                                                No progress updates for this course yet
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <div class="text-center py-5">
-                                    <div class="mb-3">
-                                        <i data-acorn-icon="notebook-empty" style="font-size: 3rem;" class="text-muted"></i>
+                                        @endforeach
                                     </div>
-                                    <h6 class="text-muted">No courses found for this certificate</h6>
-                                </div>
-                            @endif
+                                @else
+                                    <div class="text-center py-5">
+                                        <div class="mb-3">
+                                            <i data-acorn-icon="notebook-empty" style="font-size: 3rem;"
+                                                class="text-muted"></i>
+                                        </div>
+                                        <h6 class="text-muted">No courses found for this certificate</h6>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    @if($internCertificate->certificate && $internCertificate->certificate->courses->count() > 0)
-                        <a href="{{ route('admin.certificate-programs.edit', $internCertificate->certificate_id) }}" 
-                           class="btn btn-primary">
-                            <i data-acorn-icon="eye" class="me-1"></i> View Full Certificate Details
-                        </a>
-                    @endif
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @if ($internCertificate->certificate && $internCertificate->certificate->courses->count() > 0)
+                            <a href="{{ route('admin.certificate-programs.edit', $internCertificate->certificate_id) }}"
+                                class="btn btn-primary">
+                                <i data-acorn-icon="eye" class="me-1"></i> View Full Certificate Details
+                            </a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
 
 
 
@@ -1470,7 +1583,7 @@
                 padding: 15px;
                 border-radius: 5px;
                 border: 1px solid var(--bs-gray-200);
-               
+
             }
 
             .timeline::before {
@@ -1515,120 +1628,121 @@
                 height: 100%;
                 background: var(--bs-gray-300);
             }
-                  /* Timeline Styles */
-        .timeline {
-            position: relative;
-            padding-left: 40px;
-        }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 25px;
-        }
+            /* Timeline Styles */
+            .timeline {
+                position: relative;
+                padding-left: 40px;
+            }
 
-        .timeline-icon {
-            position: absolute;
-            left: -40px;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            .timeline-item {
+                position: relative;
+                margin-bottom: 25px;
+            }
 
-        .timeline-content {
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid var(--bs-gray-200);
-            background-color: var(--bs-white);
-        }
+            .timeline-icon {
+                position: absolute;
+                left: -40px;
+                top: 0;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -25px;
-            width: 1px;
-            height: 100%;
-            background: var(--bs-gray-300);
-        }
+            .timeline-content {
+                padding: 15px;
+                border-radius: 5px;
+                border: 1px solid var(--bs-gray-200);
+                background-color: var(--bs-white);
+            }
 
-        /* Mini Timeline */
-        .timeline-mini {
-            position: relative;
-            padding-left: 30px;
-        }
+            .timeline::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -25px;
+                width: 1px;
+                height: 100%;
+                background: var(--bs-gray-300);
+            }
 
-        .timeline-mini-item {
-            position: relative;
-            margin-bottom: 15px;
-        }
+            /* Mini Timeline */
+            .timeline-mini {
+                position: relative;
+                padding-left: 30px;
+            }
 
-        .timeline-mini-icon {
-            position: absolute;
-            left: -30px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            .timeline-mini-item {
+                position: relative;
+                margin-bottom: 15px;
+            }
 
-        .timeline-mini::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -20px;
-            width: 1px;
-            height: 100%;
-            background: var(--bs-gray-300);
-        }
+            .timeline-mini-icon {
+                position: absolute;
+                left: -30px;
+                top: 0;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        /* Certificate Card Styles */
-        .certificate-progress-card {
-            transition: all 0.3s ease;
-        }
+            .timeline-mini::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -20px;
+                width: 1px;
+                height: 100%;
+                background: var(--bs-gray-300);
+            }
 
-        .certificate-card-front,
-        .certificate-card-back {
-            transition: all 0.3s ease;
-        }
+            /* Certificate Card Styles */
+            .certificate-progress-card {
+                transition: all 0.3s ease;
+            }
 
-        .flip-icon {
-            transition: transform 0.3s ease;
-        }
+            .certificate-card-front,
+            .certificate-card-back {
+                transition: all 0.3s ease;
+            }
 
-        .flip-icon.flipped {
-            transform: rotate(180deg);
-        }
+            .flip-icon {
+                transition: transform 0.3s ease;
+            }
 
-        .course-progress-timeline {
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
+            .flip-icon.flipped {
+                transform: rotate(180deg);
+            }
 
-        .course-progress-timeline::-webkit-scrollbar {
-            width: 6px;
-        }
+            .course-progress-timeline {
+                max-height: 300px;
+                overflow-y: auto;
+                padding-right: 5px;
+            }
 
-        .course-progress-timeline::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
+            .course-progress-timeline::-webkit-scrollbar {
+                width: 6px;
+            }
 
-        .course-progress-timeline::-webkit-scrollbar-thumb {
-            background: #d1d1d1;
-            border-radius: 10px;
-        }
+            .course-progress-timeline::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
 
-        .course-progress-timeline::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
-        }
+            .course-progress-timeline::-webkit-scrollbar-thumb {
+                background: #d1d1d1;
+                border-radius: 10px;
+            }
+
+            .course-progress-timeline::-webkit-scrollbar-thumb:hover {
+                background: #aaa;
+            }
         </style>
     @endpush
 
@@ -1762,4 +1876,3 @@
         </script>
     @endpush
 @endsection
-

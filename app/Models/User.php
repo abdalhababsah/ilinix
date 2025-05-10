@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-class User extends Authenticatable
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasFactory;
+    use Notifiable, HasFactory ;
 
     protected $fillable = [
         'first_name',
@@ -114,7 +116,7 @@ class User extends Authenticatable
     /**
      * Get full name of user
      */
-    public function FullNameAttribute()
+    public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
     }

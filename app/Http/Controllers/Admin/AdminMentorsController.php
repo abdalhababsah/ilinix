@@ -101,13 +101,27 @@ class AdminMentorsController extends Controller
         return redirect()->route('admin.mentors.index')->with('success', 'Mentor deleted successfully.');
     }
 
-    public function deactivate($id)
-    {
-        $mentor = User::findOrFail($id);
-        $mentor->status = 'inactive';
-        $mentor->save();
-        return back()->with('success', 'Mentor deactivated.');
-    }
+/**
+ * Deactivate the specified mentor.
+ */
+public function deactivate($id)
+{
+    $mentor = User::findOrFail($id);
+    $mentor->status = 'inactive';
+    $mentor->save();
+    return back()->with('success', 'Mentor deactivated successfully.');
+}
+
+/**
+ * Activate the specified mentor.
+ */
+public function activate($id)
+{
+    $mentor = User::findOrFail($id);
+    $mentor->status = 'active';
+    $mentor->save();
+    return back()->with('success', 'Mentor activated successfully.');
+}
 
     public function sendEmail(Request $request, $id)
     {
