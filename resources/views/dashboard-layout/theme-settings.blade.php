@@ -186,16 +186,7 @@
                                     <span class="text-extra-small align-middle">DEFAULT</span>
                                 </div>
                             </a>
-                            <a href="#" class="flex-grow-1 w-33 option col" data-value="light"
-                                data-parent="navcolor">
-                                <div class="card rounded-md p-3 mb-1 no-shadow">
-                                    <div class="figure figure-secondary figure-light top"></div>
-                                    <div class="figure figure-secondary bottom"></div>
-                                </div>
-                                <div class="text-muted text-part">
-                                    <span class="text-extra-small align-middle">LIGHT</span>
-                                </div>
-                            </a>
+                            
                             <a href="#" class="flex-grow-1 w-33 option col" data-value="dark"
                                 data-parent="navcolor">
                                 <div class="card rounded-md p-3 mb-1 no-shadow">

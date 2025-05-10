@@ -5270,7 +5270,88 @@ a.badge,
 .rounded-top-end {
   border-top-right-radius: var(--border-radius-lg) !important;
 }
+    /* Navigation Active Item Styles */
 
+/* Primary menu active item styles */
+.menu > li.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
+}
+
+.menu > li.active > a {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.menu > li.active > a .icon {
+  color: var(--primary);
+}
+
+/* Submenu active item styles */
+.menu > li > ul > li.active {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-radius: 0.25rem;
+}
+
+.menu > li > ul > li.active > a {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* Active indicator line */
+.menu > li.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--primary);
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Active hover styles */
+.menu > li.active:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menu > li > ul > li.active:hover {
+  background-color: rgba(var(--primary-rgb), 0.15);
+}
+
+/* Dark theme adjustments */
+html.dark .menu > li.active {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+html.dark .menu > li > ul > li.active {
+  background-color: rgba(var(--primary-rgb), 0.05);
+}
+
+/* Mobile menu active styles */
+@media (max-width: 992px) {
+  .nav-container.mobile-side-ready .menu > li.active {
+    background-color: rgba(var(--primary-rgb), 0.1);
+  }
+  
+  .nav-container.mobile-side-ready .menu > li.active::before {
+    width: 4px;
+  }
+}
+
+/* Responsive submenu active indicator */
+@media (min-width: 992px) {
+  .menu > li > ul > li.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--primary);
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
+}
 .rounded-end {
   border-top-right-radius: var(--border-radius-lg) !important;
   border-bottom-right-radius: var(--border-radius-lg) !important;

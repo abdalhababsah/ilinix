@@ -1,17 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Basic Meta Tags -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ilinix offers AI-enriched contact center solutions. Turn first-time callers into lifetime customers with our modern cloud platform serving 165+ countries globally.">
+<meta name="keywords" content="ilinix, contact center, AI solutions, cloud contact center, customer experience, CX solutions, omnichannel, Smart IVR, CCaaS">
+<meta name="author" content="ilinix">
+<meta name="robots" content="index, follow">
+<meta name="language" content="English">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ilinix Cloud Internship Program</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="{{ asset('home/aos.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('home/home.min.css') }}">
-</head>
-<style>
+<!-- Canonical URL -->
+<link rel="canonical" href="https://ilinix.com/">
 
-</style>
+<!-- Open Graph Meta Tags for Social Media -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ilinix.com/">
+<meta property="og:title" content="ilinix | Modern Cloud Contact Center Solutions">
+<meta property="og:description" content="AI-enriched contact center solutions that help businesses create exceptional customer experiences. No upfront payments, no long-term commitments.">
+<meta property="og:image" content="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
+<meta property="og:site_name" content="ilinix">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ilinix">
+<meta name="twitter:title" content="ilinix | Modern Cloud Contact Center Solutions">
+<meta name="twitter:description" content="Turn first-time callers into lifetime customers with AI-enriched contact solutions. Serving 165+ countries globally.">
+<meta name="twitter:image" content="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
+
+<!-- Favicon -->
+<link rel="icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" type="image/svg+xml">
+<link rel="shortcut icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
+<link rel="icon" type="image/svg+xml" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
+<link rel="mask-icon" href="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}" color="#4285f4">
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#4285f4">
+<meta name="msapplication-TileColor" content="#4285f4">
+
+<!-- App Info -->
+<meta name="application-name" content="ilinix">
+<meta name="apple-mobile-web-app-title" content="ilinix">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- DNS Prefetch and Preconnect -->
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="preconnect" href="//cdnjs.cloudflare.com" crossorigin>
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ilinix",
+  "url": "https://ilinix.com",
+  "logo": "{{ asset('dashboard-assets/img/logo/logo-white.svg') }}",
+  "description": "AI-enriched cloud contact center solutions that create exceptional customer experiences.",
+  "sameAs": [
+    "https://www.facebook.com/ilinix",
+    "https://www.linkedin.com/company/ilinix",
+    "https://twitter.com/ilinix"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-800-123-4567",
+    "contactType": "customer service",
+    "availableLanguage": "English"
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "Cloud Contact Center as a Service with no up-front payments or long-term commitments",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
+<!-- Structured Data for Service -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Cloud Contact Center Solutions",
+  "provider": {
+    "@type": "Organization",
+    "name": "ilinix"
+  },
+  "description": "Modern cloud contact center solutions that help businesses create exceptional customer experiences through AI-enriched technology.",
+  "areaServed": "Global",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "ilinix Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Smart IVR",
+          "description": "Deliver lifelike customer experiences that support accurate multi-turn conversations."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Omnichannel Support",
+          "description": "Native support for voice, email and chat to meet users wherever they are."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Voice ID",
+          "description": "Machine learning for real-time caller authentication and fraud risk detection."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Call Analytics",
+          "description": "Instant insights that turn conversations into data through analytics revealing customer sentiment."
+        }
+      }
+    ]
+  }
+}
+</script>
+
+<!-- Page-specific Meta Tags -->
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+
+<title>ilinix | Modern Cloud Contact Center Solutions</title>
 
 <body>
     <!-- Cursor Animation -->

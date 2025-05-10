@@ -38,37 +38,29 @@
                     <div class="col-12 p-1 mb-2 pt-2">
                         <div class="text-extra-small text-primary">ACCOUNT</div>
                     </div>
-                    <div class="col-6 ps-1 pe-1">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#">Themes</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-6 pe-1 ps-1">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#">Devices</a>
-                            </li>
-                        </ul>
+                    <div class="col-12 ps-1 pe-1">
+                        <div class="card">
+                            <div >
+                                <div class="mb-2">
+                                    <strong>{{ Auth::user()->first_name ?? 'Unknown' }} {{ Auth::user()->last_name ?? 'Name' }}</strong>
+                                </div>
+                                <div class="mb-2">
+                                    <i data-acorn-icon="email" class="me-1" data-acorn-size="15"></i>
+                                    <span>{{ Auth::user()->email ?? 'No email available' }}</span>
+                                </div>
+                                <div>
+                                    <i data-acorn-icon="user" class="me-1" data-acorn-size="15"></i>
+                                    <span>Role: {{ Auth::user()->role_id == 1 ? 'admin' : (Auth::user()->role_id == 2 ? 'mentor' : (Auth::user()->role_id == 3 ? 'intern' : 'Unknown Role')) }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-1 ms-0 me-0">
                     <div class="col-12 p-1 mb-3 pt-3">
                         <div class="separator-light"></div>
                     </div>
-                    <div class="col-6 ps-1 pe-1">
-                        <ul class="list-unstyled">
-                            <li style="margin-top: 5px;">
-                                <a href="#" >
-                                    <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Settings</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <div class="col-6 pe-1 ps-1">
+                    <div class="col-12 pe-1 ps-1">
                         <ul class="list-unstyled">
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -112,7 +104,7 @@
         <!-- Menu Start -->
         <div class="menu-container flex-grow-1">
             <ul id="menu" class="menu">
-                <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <li class="{{ request()->routeIs('dashboard', 'intern.dashboard', 'admin.dashboard', 'mentor.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}">
                         <i data-acorn-icon="home-garage" class="icon" data-acorn-size="18"></i>
                         <span class="label">Dashboards</span>
@@ -207,6 +199,8 @@
                         </a>
                     </li>
                 @endif
+                
+                
             </ul>
         </div>
         <!-- Menu End -->
