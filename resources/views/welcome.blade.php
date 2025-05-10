@@ -1,8 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
 <!-- Basic Meta Tags -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="ilinix offers AI-enriched contact center solutions. Turn first-time callers into lifetime customers with our modern cloud platform serving 165+ countries globally.">
-<meta name="keywords" content="ilinix, contact center, AI solutions, cloud contact center, customer experience, CX solutions, omnichannel, Smart IVR, CCaaS">
+<meta name="description" content="ilinix offers AI-enriched contact center solutions that turn first-time callers into lifetime customers. Our modern cloud platform serves 165+ countries with no upfront costs or long-term commitments.">
+<meta name="keywords" content="ilinix, contact center solutions, AI solutions, cloud contact center, customer experience, CX solutions, omnichannel support, Smart IVR, CCaaS">
 <meta name="author" content="ilinix">
 <meta name="robots" content="index, follow">
 <meta name="language" content="English">
@@ -21,8 +25,8 @@
 <!-- Twitter Card Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@ilinix">
-<meta name="twitter:title" content="ilinix | Modern Cloud Contact Center Solutions">
-<meta name="twitter:description" content="Turn first-time callers into lifetime customers with AI-enriched contact solutions. Serving 165+ countries globally.">
+<meta name="twitter:title" content="ilinix | AI-Powered Cloud Contact Center Solutions">
+<meta name="twitter:description" content="Transform your customer service with ilinix's omnichannel contact center platform. Smart IVR, real-time analytics, and seamless CRM integration.">
 <meta name="twitter:image" content="{{ asset('dashboard-assets/img/logo/logo-white.svg') }}">
 
 <!-- Favicon -->
@@ -42,9 +46,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<!-- DNS Prefetch and Preconnect -->
-<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-<link rel="preconnect" href="//cdnjs.cloudflare.com" crossorigin>
+<!-- Additional SEO Meta Tags -->
+<meta name="geo.region" content="US">
+<meta name="geo.position" content="37.09024;-95.712891">
+<meta name="ICBM" content="37.09024, -95.712891">
 
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json">
@@ -54,7 +59,7 @@
   "name": "ilinix",
   "url": "https://ilinix.com",
   "logo": "{{ asset('dashboard-assets/img/logo/logo-white.svg') }}",
-  "description": "AI-enriched cloud contact center solutions that create exceptional customer experiences.",
+  "description": "AI-enriched cloud contact center solutions provider offering omnichannel customer experience platforms.",
   "sameAs": [
     "https://www.facebook.com/ilinix",
     "https://www.linkedin.com/company/ilinix",
@@ -64,7 +69,7 @@
     "@type": "ContactPoint",
     "telephone": "+1-800-123-4567",
     "contactType": "customer service",
-    "availableLanguage": "English"
+    "availableLanguage": ["English", "Spanish", "French"]
   },
   "offers": {
     "@type": "Offer",
@@ -86,7 +91,15 @@
     "name": "ilinix"
   },
   "description": "Modern cloud contact center solutions that help businesses create exceptional customer experiences through AI-enriched technology.",
-  "areaServed": "Global",
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": "37.09024",
+      "longitude": "-95.712891"
+    },
+    "geoRadius": "5000"
+  },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "ilinix Services",
@@ -111,8 +124,16 @@
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Voice ID",
-          "description": "Machine learning for real-time caller authentication and fraud risk detection."
+          "name": "Voice ID Authentication",
+          "description": "ML-powered real-time caller authentication and fraud risk detection."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "CRM Integration",
+          "description": "Seamless integration with popular CRM platforms including Salesforce, Zendesk, ServiceNow, and more."
         }
       },
       {
@@ -120,19 +141,99 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Call Analytics",
-          "description": "Instant insights that turn conversations into data through analytics revealing customer sentiment."
+          "description": "Instant insights that turn conversations into actionable data through advanced analytics."
         }
       }
     ]
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "1024"
   }
 }
 </script>
 
-<!-- Page-specific Meta Tags -->
-<meta name="format-detection" content="telephone=no">
-<meta http-equiv="x-ua-compatible" content="IE=edge">
+<!-- Product Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "ilinix Cloud Contact Center",
+  "image": "{{ asset('dashboard-assets/img/logo/logo-white.svg') }}",
+  "description": "AI-powered cloud contact center platform with omnichannel support, smart IVR, and seamless CRM integration.",
+  "brand": {
+    "@type": "Brand",
+    "name": "ilinix"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://ilinix.com/pricing",
+    "priceCurrency": "USD",
+    "priceValidUntil": "2025-12-31",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "ilinix"
+    }
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "1024"
+  }
+}
+</script>
 
-<title>ilinix | Modern Cloud Contact Center Solutions</title>
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a cloud contact center?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A cloud contact center is a comprehensive customer service solution hosted in the cloud. It enables businesses to handle customer interactions across multiple channels including voice, email, chat, and social media, without the need for on-premise infrastructure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes ilinix different from other contact center solutions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ilinix offers AI-enriched contact center solutions with no upfront payments or long-term commitments. Our platform includes Smart IVR, voice authentication, instant analytics, and seamless integration with popular CRM systems, all designed to create exceptional customer experiences."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does ilinix require special hardware or infrastructure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. ilinix is a cloud-based solution that requires no infrastructure to manage. There are no upfront investments or operational overhead, making it accessible for businesses of all sizes."
+      }
+    }
+  ]
+}
+</script>
+
+<title>ilinix | AI-Powered Cloud Contact Center Solutions</title>
+
+
+
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="{{ asset('home/aos.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('home/home.min.css') }}">
+</head>
+<style>
+
+</style>
 
 <body>
     <!-- Cursor Animation -->
@@ -140,7 +241,7 @@
     <div class="cursor-outline"></div>
 
     <!-- Particles Background -->
-    <div id="particles-js"></div>
+    {{-- <div id="particles-js"></div> --}}
 
     <!-- Header -->
     <header>
