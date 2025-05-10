@@ -5668,10 +5668,13 @@ button {
   padding: 9px 35px;
   height: var(--input-height);
 }
+.btn-sm-admin {
+  padding: 8px 14px !important;
 
+}
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 8px 14px;
+  padding: 4px 14px;
   font-size: 0.9em;
   border-radius: var(--border-radius-md);
   line-height: 1;
@@ -6374,8 +6377,7 @@ button {
 .btn-outline-danger {
   box-shadow: inset 0 0 0 1px var(--danger) !important;
   color: var(--danger) !important;
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+
 }
 .btn-outline-danger:hover {
   color: var(--light-text) !important;
@@ -9470,7 +9472,7 @@ html[data-placement=vertical] #scrollSpyMenu {
 *
 */
 .progress {
-  height: 0.25rem;
+  height: 1.25rem;
   border-radius: var(--border-radius-md);
   background-color: var(--separator-light);
 }

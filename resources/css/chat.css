@@ -121,6 +121,7 @@
   }
   
   .message-time {
+    min-width: 54px;
     font-size: 0.7rem;
     color: #6c757d;
   }
@@ -226,6 +227,7 @@
   }
   
   .message-sender {
+    min-width: 100px;
     font-weight: 600;
     font-size: 0.75rem;
     margin-right: 0.5rem;
@@ -6099,7 +6101,7 @@ button {
 
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 8px 14px;
+  padding: 4px 14px;
   font-size: 0.9em;
   border-radius: var(--border-radius-md);
   line-height: 1;
@@ -6802,8 +6804,7 @@ button {
 .btn-outline-danger {
   box-shadow: inset 0 0 0 1px var(--danger) !important;
   color: var(--danger) !important;
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+
 }
 .btn-outline-danger:hover {
   color: var(--light-text) !important;

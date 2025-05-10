@@ -16,6 +16,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'last_seen',
         'role_id',
         'assigned_mentor_id'
     ];

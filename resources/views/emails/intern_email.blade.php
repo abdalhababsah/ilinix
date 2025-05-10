@@ -277,32 +277,9 @@
             <div class="message-content">
                 <p>{{ $messageBody }}</p>
                 
-                <!-- The following sections can be conditionally included based on the message content -->
-                <!-- <div class="calendar-info">
-                    <div class="calendar-date">Next Mentorship Session: Tuesday, May 7th at 2:00 PM</div>
-                    <p>Please come prepared with your current project updates and any questions you'd like to discuss.</p>
-                </div> -->
-                
-                <!-- <div class="user-info">
-                    <p><span class="user-info-label">Name:</span> John Smith</p>
-                    <p><span class="user-info-label">Internship Period:</span> May 1 - August 31, 2025</p>
-                    <p><span class="user-info-label">Department:</span> Software Development</p>
-                    <p><span class="user-info-label">Mentor:</span> Sarah Johnson</p>
-                </div> -->
-                
                 <div class="cta-container">
                     <a href="#" class="cta-button">View Dashboard</a>
                 </div>
-                
-                <!-- <div class="tips-section">
-                    <div class="tips-title">Internship Success Tips</div>
-                    <ul class="tips-list">
-                        <li>Be proactive and ask questions when you're unsure</li>
-                        <li>Keep track of your achievements and learnings</li>
-                        <li>Schedule regular check-ins with your mentor</li>
-                        <li>Network with other interns and team members</li>
-                    </ul>
-                </div> -->
             </div>
             
             <div class="signature">
@@ -314,20 +291,13 @@
         
         <div class="email-footer">
             <div class="footer-links">
-                <a href="#">Dashboard</a>
-                <a href="#">Resources</a>
-                <a href="#">Support</a>
-                <a href="#">Contact Us</a>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+
             </div>
             
             <p class="footer-text">© {{ date('Y') }} Ilinix. All rights reserved.</p>
             <p class="footer-text">This email was sent to you as part of the Ilinix Internship Program.</p>
             
-            <div class="social-icons">
-                <a href="#">Twitter</a> • 
-                <a href="#">LinkedIn</a> • 
-                <a href="#">Instagram</a>
-            </div>
         </div>
     </div>
 </body>

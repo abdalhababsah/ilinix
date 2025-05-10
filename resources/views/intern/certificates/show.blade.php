@@ -635,7 +635,7 @@
                 padding: 15px;
                 border-radius: 5px;
                 border: 1px solid var(--bs-gray-200);
-                background-color: var(--bs-white);
+
             }
         </style>
     @endpush

@@ -566,7 +566,7 @@
                                         </td>
                                         <td>{{ $provider->certificates_count }}</td>
                                         <td class="text-end">
-                                            <a href="{{ route('admin.providers.index') }}" class="btn btn-sm btn-icon btn-outline-primary ms-1">
+                                            <a href="{{ route('admin.providers.index') }}" class="btn btn-sm btn-sm-admin btn-icon btn-outline-primary ms-1">
                                                 <i data-acorn-icon="eye"></i>
                                             </a>
                                         </td>
@@ -601,7 +601,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.vouchers.index', ['used' => '0']) }}" class="btn btn-sm btn-icon btn-icon-start btn-outline-primary">
+                            <a href="{{ route('admin.vouchers.index', ['used' => '0']) }}" class="btn btn-sm btn-sm-admin btn-icon btn-icon-start btn-outline-primary">
                                 <i data-acorn-icon="eye"></i>
                                 <span>View Available</span>
                             </a>
@@ -618,7 +618,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('admin.vouchers.index', ['used' => '1']) }}" class="btn btn-sm btn-icon btn-icon-start btn-outline-primary">
+                            <a href="{{ route('admin.vouchers.index', ['used' => '1']) }}" class="btn btn-sm btn-sm-admin btn-icon btn-icon-start btn-outline-primary">
                                 <i data-acorn-icon="eye"></i>
                                 <span>View Used</span>
                             </a>

@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Admin\AdminAdminsController;
 use App\Http\Controllers\Admin\AdminCertificateProgramsController;
+use App\Http\Controllers\Admin\AdminFlaggedInternsController;
 use App\Http\Controllers\Admin\AdminMentorsController;
 use App\Http\Controllers\Admin\AdminOnboardingController;
 use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\Intern\InternCertificateController;
+use App\Http\Controllers\Intern\InternSessionController;
 use App\Http\Controllers\Intern\OnboardingController;
 use App\Http\Controllers\Mentor\MentorDashboardController;
+use App\Http\Controllers\Mentor\MentorInternsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -69,8 +72,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Providers
     Route::resource('providers', ProviderController::class);
 
-
-
+    Route::get('/flagged-interns', [AdminFlaggedInternsController::class, 'index'])->name('flagged-interns.index');
+    Route::put('/flagged-interns/{id}/update-status', [AdminFlaggedInternsController::class, 'updateStatus'])->name('flagged-interns.update-status');
+    
     Route::put('mentors/{mentor}/deactivate', [AdminMentorsController::class, 'deactivate'])
         ->name('mentors.deactivate');
     Route::post('mentors/{mentor}/send-email', [AdminMentorsController::class, 'sendEmail'])
@@ -84,7 +88,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
  */
 Route::prefix('mentor')->name('mentor.')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('/dashboard', [MentorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/interns', [MentorDashboardController::class, 'viewAllInterns'])->name('interns.index');
+    Route::get('/interns/{id}', [MentorInternsController::class, 'show'])->name('interns.show');
+    Route::post('/interns/{intern}/email', [MentorInternsController::class, 'sendEmail'])->name('interns.send-email');
 
+    
+    Route::post('/interns/{intern}/nudge', [MentorInternsController::class, 'nudgeIntern'])->name('interns.nudge');
+    Route::post('/interns/{intern}/flag', [MentorInternsController::class, 'flagIntern'])->name('interns.flag');
+    // Course Progress
+    Route::post('/course/progress', [MentorDashboardController::class, 'updateCourseProgress'])->name('course.progress');
+    
+    // Certificate Progress
+    Route::post('/certificate/progress', [MentorDashboardController::class, 'updateCertificateProgress'])->name('certificate.progress');
+    Route::post('/interns/{intern}/sessions', [MentorInternsController::class, 'storeSession'])->name('sessions.store');
+
+    // Vouchers
+    Route::get('/vouchers/available/{providerId}', [MentorDashboardController::class, 'getAvailableVouchers'])->name('vouchers.available');
+    Route::post('/vouchers/assign', [MentorDashboardController::class, 'assignVoucher'])->name('vouchers.assign');
 });
 
 /**
@@ -94,7 +114,7 @@ Route::prefix('mentor')->name('mentor.')->middleware(['auth', 'mentor'])->group(
  */
 Route::prefix('intern')->name('intern.')->middleware(['auth', 'intern', 'check.onboarding'])->group(function () {
     Route::get('/dashboard', [InternDashboardController::class, 'index'])->name('dashboard');
-
+    Route::get('/sessions', [InternSessionController::class, 'show'])->name('sessions.show');
     // Routes for certificate and course detail views
     Route::get('/certificates', [InternCertificateController::class, 'index'])->name('certificates.index');
     Route::get('/certificates/completed', [InternCertificateController::class, 'completedCertificates'])->name('certificates.completed');
