@@ -2,57 +2,62 @@
 <html lang="en">
 
 <head>
-<!-- Basic Meta Tags -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="ilinix offers AI-enriched contact center solutions that turn first-time callers into lifetime customers. Our modern cloud platform serves 165+ countries with no upfront costs or long-term commitments.">
-<meta name="keywords" content="ilinix, contact center solutions, AI solutions, cloud contact center, customer experience, CX solutions, omnichannel support, Smart IVR, CCaaS">
-<meta name="author" content="ilinix">
-<meta name="robots" content="index, follow">
-<meta name="language" content="English">
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="ilinix offers AI-enriched contact center solutions that turn first-time callers into lifetime customers. Our modern cloud platform serves 165+ countries with no upfront costs or long-term commitments.">
+    <meta name="keywords"
+        content="ilinix, contact center solutions, AI solutions, cloud contact center, customer experience, CX solutions, omnichannel support, Smart IVR, CCaaS">
+    <meta name="author" content="ilinix">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
 
-<!-- Canonical URL -->
-<link rel="canonical" href="https://ilinix.com/">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://ilinix.com/">
 
-<!-- Open Graph Meta Tags for Social Media -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ilinix.com/">
-<meta property="og:title" content="ilinix | Modern Cloud Contact Center Solutions">
-<meta property="og:description" content="AI-enriched contact center solutions that help businesses create exceptional customer experiences. No upfront payments, no long-term commitments.">
-<meta property="og:image" content="https://red-aardvark-760135.hostingersite.com/dashboard-assets/img/logo/ilinix-logo.png">
-<meta property="og:site_name" content="ilinix">
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ilinix.com/">
+    <meta property="og:title" content="ilinix | Modern Cloud Contact Center Solutions">
+    <meta property="og:description"
+        content="AI-enriched contact center solutions that help businesses create exceptional customer experiences. No upfront payments, no long-term commitments.">
+    <meta property="og:image"
+        content="https://red-aardvark-760135.hostingersite.com/dashboard-assets/img/logo/ilinix-logo.png">
+    <meta property="og:site_name" content="ilinix">
 
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@ilinix">
-<meta name="twitter:title" content="ilinix | AI-Powered Cloud Contact Center Solutions">
-<meta name="twitter:description" content="Transform your customer service with ilinix's omnichannel contact center platform. Smart IVR, real-time analytics, and seamless CRM integration.">
-<meta name="twitter:image" content="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ilinix">
+    <meta name="twitter:title" content="ilinix | AI-Powered Cloud Contact Center Solutions">
+    <meta name="twitter:description"
+        content="Transform your customer service with ilinix's omnichannel contact center platform. Smart IVR, real-time analytics, and seamless CRM integration.">
+    <meta name="twitter:image" content="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
 
-<!-- Favicon -->
-<link rel="icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" type="image/svg+xml">
-<link rel="shortcut icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" type="image/svg+xml">
-<link rel="apple-touch-icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
-<link rel="icon" type="image/svg+xml" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
-<link rel="mask-icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" color="#4285f4">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" type="image/svg+xml">
+    <link rel="shortcut icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}">
+    <link rel="mask-icon" href="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" color="#4285f4">
 
-<!-- Theme Color -->
-<meta name="theme-color" content="#4285f4">
-<meta name="msapplication-TileColor" content="#4285f4">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4285f4">
+    <meta name="msapplication-TileColor" content="#4285f4">
 
-<!-- App Info -->
-<meta name="application-name" content="ilinix">
-<meta name="apple-mobile-web-app-title" content="ilinix">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- App Info -->
+    <meta name="application-name" content="ilinix">
+    <meta name="apple-mobile-web-app-title" content="ilinix">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<!-- Additional SEO Meta Tags -->
-<meta name="geo.region" content="US">
-<meta name="geo.position" content="37.09024;-95.712891">
-<meta name="ICBM" content="37.09024, -95.712891">
-<script src="{{ asset('home/home.min.js') }}"></script>
-<!-- Structured Data (JSON-LD) -->
-<script type="application/ld+json">
+    <!-- Additional SEO Meta Tags -->
+    <meta name="geo.region" content="US">
+    <meta name="geo.position" content="37.09024;-95.712891">
+    <meta name="ICBM" content="37.09024, -95.712891">
+    <script src="{{ asset('home/home.min.js') }}"></script>
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -80,8 +85,8 @@
 }
 </script>
 
-<!-- Structured Data for Service -->
-<script type="application/ld+json">
+    <!-- Structured Data for Service -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -156,8 +161,8 @@
 }
 </script>
 
-<!-- Product Structured Data -->
-<script type="application/ld+json">
+    <!-- Product Structured Data -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -187,8 +192,8 @@
 }
 </script>
 
-<!-- FAQ Structured Data -->
-<script type="application/ld+json">
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -221,7 +226,7 @@
 }
 </script>
 
-<title>ilinix | AI-Powered Cloud Contact Center Solutions</title>
+    <title>ilinix | AI-Powered Cloud Contact Center Solutions</title>
 
 
 
@@ -232,14 +237,15 @@
     <link rel="stylesheet" href="{{ asset('home/home.min.css') }}">
 </head>
 <style>
-@media (max-width: 768px) {
-    .cursor-outline {
-        display: none !important;
+    @media (max-width: 768px) {
+        .cursor-outline {
+            display: none !important;
+        }
+
+        .cursor-dot {
+            display: none !important;
+        }
     }
-    .cursor-dot {
-        display: none !important;
-    }
-}
 </style>
 
 <body>
@@ -255,7 +261,8 @@
         <div class="container">
             <nav class="navbar">
                 <a href="{{ route('home') }}" class="logo">
-                    <img style=" height: 30px !important;" src="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" alt="">
+                    <img style=" height: 30px !important;"
+                        src="{{ asset('dashboard-assets/img/logo/ilinix-logo.png') }}" alt="">
                     <span class="logo-dot"></span>
                 </a>
 
@@ -276,7 +283,8 @@
                         <a href="{{ route('logout') }}" class="btn btn-logout" id="logoutBtn"
                             onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">Log
                             out</a>
-                        <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
                             @csrf
                         </form>
                     @endauth
@@ -364,7 +372,9 @@
             </div>
         </div>
 
-        <div class="scroll-indicator">
+        <div class="scroll-indicator" style="
+        transform: translateX(-50%) !important;
+    ">
             <span>Scroll Down</span>
             <div class="mouse">
                 <div class="wheel"></div>
@@ -580,7 +590,8 @@
                 <div class="testimonial-track">
                     <div class="testimonial-card">
                         <div class="testimonial-image">
-                            <img src="{{ asset('dashboard-assets/img/profile/profile-1.webp') }}" alt="Former Intern">
+                            <img src="{{ asset('dashboard-assets/img/profile/profile-1.webp') }}"
+                                alt="Former Intern">
                         </div>
                         <div class="testimonial-content">
                             <p>"The ilinix internship program was a transformative experience. I worked with
@@ -595,7 +606,8 @@
 
                     <div class="testimonial-card">
                         <div class="testimonial-image">
-                            <img src="{{ asset('dashboard-assets/img/profile/profile-2.webp') }}" alt="Former Intern">
+                            <img src="{{ asset('dashboard-assets/img/profile/profile-2.webp') }}"
+                                alt="Former Intern">
                         </div>
                         <div class="testimonial-content">
                             <p>"I joined ilinix as an intern and now I'm a full-time AI developer. The hands-on
@@ -609,7 +621,8 @@
 
                     <div class="testimonial-card">
                         <div class="testimonial-image">
-                            <img src="{{ asset('dashboard-assets/img/profile/profile-4.webp') }}" alt="Former Intern">
+                            <img src="{{ asset('dashboard-assets/img/profile/profile-4.webp') }}"
+                                alt="Former Intern">
                         </div>
                         <div class="testimonial-content">
                             <p>"The global exposure and opportunity to work on solutions that impact businesses in 165+
@@ -798,9 +811,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('home/aos.js') }}"></script>
-    <script>
-
-    </script>
+    <script></script>
 </body>
 
 </html>
