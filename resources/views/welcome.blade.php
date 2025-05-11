@@ -56,6 +56,7 @@
     <meta name="geo.position" content="37.09024;-95.712891">
     <meta name="ICBM" content="37.09024, -95.712891">
     <script src="{{ asset('home/home.min.js') }}"></script>
+    <script src="{{ asset('home/particles.min.js') }}"></script>
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
 {
