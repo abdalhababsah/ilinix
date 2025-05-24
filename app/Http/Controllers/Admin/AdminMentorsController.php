@@ -73,20 +73,24 @@ class AdminMentorsController extends Controller
     public function update(Request $request, $id)
     {
         $mentor = User::findOrFail($id);
-
+    
         $validated = $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8',
         ]);
-
+    
+        // Handle password update - only include it if provided
         if ($request->filled('password')) {
             $validated['password'] = bcrypt($validated['password']);
+        } else {
+            // Remove password from validated data to keep existing password
+            unset($validated['password']);
         }
-
+    
         $mentor->update($validated);
-
+    
         return redirect()->route('admin.mentors.index')->with('success', 'Mentor updated successfully.');
     }
 
