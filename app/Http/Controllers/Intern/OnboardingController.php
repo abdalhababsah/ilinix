@@ -17,7 +17,7 @@ class OnboardingController extends Controller
     {
         $user = Auth::user();
         
-        // Get all onboarding steps ordered by step_order
+        // Get all onboarding steps ordered by step_order (admin-defined order)
         $allSteps = OnboardingStep::orderBy('step_order')->get();
         
         // If no steps exist, redirect to dashboard
@@ -42,8 +42,16 @@ class OnboardingController extends Controller
             }
         }
         
-        // Refresh user steps after potential changes
-        $userSteps = $user->onboardingSteps()->with('step')->orderBy('onboarding_step_id')->get();
+        // Refresh user steps and order them by the step's step_order (not by onboarding_step_id)
+        $userSteps = $user->onboardingSteps()
+            ->with('step')
+            ->join('onboarding_steps', 'user_onboarding_steps.onboarding_step_id', '=', 'onboarding_steps.id')
+            ->orderBy('onboarding_steps.step_order')
+            ->select('user_onboarding_steps.*')
+            ->get();
+        
+        // Load the step relationship for each user step
+        $userSteps->load('step');
         
         // Get the current active step (first incomplete step, or last step if all complete)
         $activeStep = $userSteps->firstWhere('is_completed', false);
@@ -60,6 +68,7 @@ class OnboardingController extends Controller
         
         return view('intern.onboarding', compact('userSteps', 'activeStep', 'progressPercentage'));
     }
+    
     
     /**
      * Mark a step as completed (AJAX)

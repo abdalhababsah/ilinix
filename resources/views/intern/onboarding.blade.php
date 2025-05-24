@@ -114,7 +114,7 @@
                                 <div class="resource-image mb-4">
                                     <a href="{{ $activeStep->step->resource_link }}" target="_blank" class="resource-link">
                                         <div class="resource-preview">
-                                            <img src="{{ asset($activeStep->step->resource_link) }}" alt="Resource Material" class="img-fluid">
+                                            <img src="{{ asset('storage/' . $activeStep->step->resource_link) }}" alt="Resource Material" class="img-fluid">
                                             <div class="resource-overlay">
                                                 <span><i class="fas fa-external-link-alt me-2"></i> View Full Resource</span>
                                             </div>
